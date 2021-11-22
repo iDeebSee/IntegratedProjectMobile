@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "66846409381",
+    "project_id": "integrated-project-mobil-20e24",
+    "storage_bucket": "integrated-project-mobil-20e24.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:66846409381:android:e969b329be3d2a4e09034c",
+        "android_client_info": {
+          "package_name": "be.ap.edu.integratedprojectmobile"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "66846409381-d94ul2a2hms8ifug9cioae62gnb95ssr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDjQusS2HWrFQimM41yhB99mzk-kNKlEuQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "66846409381-d94ul2a2hms8ifug9cioae62gnb95ssr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
