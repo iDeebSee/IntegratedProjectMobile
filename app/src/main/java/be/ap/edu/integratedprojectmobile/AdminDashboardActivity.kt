@@ -23,6 +23,7 @@ class AdminDashboardActivity : AppCompatActivity() {
         val db = Firebase.firestore
         val btnExams = findViewById<Button>(R.id.btnExams)
         val btnStudents = findViewById<Button>(R.id.btnStudents)
+        val btnChangePass = findViewById<Button>(R.id.btnPassword)
 
         db.collection("exams")
             .get()
@@ -62,6 +63,11 @@ class AdminDashboardActivity : AppCompatActivity() {
         btnStudents.setOnClickListener {
             val studensIntent = Intent(this, StudentsActivity::class.java)
             startActivity(studensIntent)
+        }
+
+        btnChangePass.setOnClickListener {
+            val changePassIntent = Intent(this, AdminChangePasswordActivity::class.java)
+            startActivity(changePassIntent)
         }
     }
 }
