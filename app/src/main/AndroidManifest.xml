@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.IntegratedProjectMobile">
         <activity
+            android:name=".AdminChangePasswordActivity"
+            android:exported="true" />
+        <activity
             android:name=".StudentsActivity"
             android:exported="true" />
         <activity
@@ -24,10 +27,7 @@
         <activity
             android:name=".AdminLoginActivity"
             android:exported="true" />
-        <activity
-            android:name=".ui.login.LoginActivity"
-            android:exported="true"
-            android:label="@string/title_activity_login" />
+
         <activity
             android:name=".MainActivity"
             android:exported="true">
