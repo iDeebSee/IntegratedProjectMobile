@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AdminCSV">
+
+    <EditText
+        android:id="@+id/txtCSVInput"
+        android:layout_width="498dp"
+        android:layout_height="315dp"
+        android:layout_marginStart="263dp"
+        android:layout_marginTop="144dp"
+        android:layout_marginEnd="263dp"
+        android:layout_marginBottom="52dp"
+        android:ems="10"
+        android:gravity="start|top"
+        android:inputType="textMultiLine"
+        app:layout_constraintBottom_toTopOf="@+id/btnaddStudentCSV"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="SpeakableTextPresentCheck" />
+
+    <Button
+        android:id="@+id/btnaddStudentCSV"
+        android:layout_width="183dp"
+        android:layout_height="69dp"
+        android:layout_marginStart="421dp"
+        android:layout_marginTop="52dp"
+        android:layout_marginEnd="420dp"
+        android:layout_marginBottom="188dp"
+        android:text="Add student"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtCSVInput" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
