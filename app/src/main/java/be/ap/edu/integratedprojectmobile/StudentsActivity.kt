@@ -108,8 +108,8 @@ class StudentsActivity : AppCompatActivity() {
                     locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER)//p0
 
                 Log.d("locationNetwork", locationNetwork.toString())
-                txtLat.text = locationNetwork!!.latitude.toString() + " [Network]"
-                txtLon.text = locationNetwork!!.longitude.toString() + " [Network]"
+//                txtLat.text = locationNetwork!!.latitude.toString() + " [Network]"
+//                txtLon.text = locationNetwork!!.longitude.toString() + " [Network]"
 
                 if (locationNetwork != null) {
                     if (uid != null) {

@@ -1,4 +1,4 @@
-package be.ap.edu.integratedprojectmobile
+package be.ap.edu.integratedprojectmobile.admin
 
 import android.content.ContentValues.TAG
 import android.content.Intent
@@ -8,6 +8,9 @@ import android.util.Log
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.Spinner
+import be.ap.edu.integratedprojectmobile.ExamsActivity
+import be.ap.edu.integratedprojectmobile.R
+import be.ap.edu.integratedprojectmobile.StudentsActivity
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
@@ -31,7 +34,7 @@ class AdminDashboardActivity : AppCompatActivity() {
                 for (document in result) {
                     Log.d(TAG, "${document.id} => ${document.data}")
                     if (spinnerExams != null) {
-                        examAdapter.add(document.data.values.toString());
+                        examAdapter.add(document.data["name"].toString());
                         spinnerExams.adapter = examAdapter;
                     }
                 }
@@ -44,9 +47,9 @@ class AdminDashboardActivity : AppCompatActivity() {
             .get()
             .addOnSuccessListener { result ->
                 for (document in result) {
-                    Log.d(TAG, "${document.id} => ${document.data}")
+                    Log.d(TAG, "${document.id} => ${document.data["student"]}")
                     if (spinnerStudents != null) {
-                        studentAdapter.add(document.data.values.toString());
+                        studentAdapter.add(document.data["student"].toString());//.values.toString()
                         spinnerStudents.adapter = studentAdapter;
                     }
                 }

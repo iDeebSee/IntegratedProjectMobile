@@ -2,10 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="be.ap.edu.integratedprojectmobile">
 
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -14,9 +14,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.IntegratedProjectMobile">
-
         <activity
-            android:name=".AdminChangePasswordActivity"
+            android:name=".ExamDashboardActivity"
+            android:exported="true" />
+        <activity
+            android:name=".PopUpWindow"
+            android:exported="true" />
+        <activity
+            android:name=".NewExamActivity"
+            android:exported="true" />
+        <activity
+            android:name=".admin.AdminChangePasswordActivity"
             android:exported="true" />
         <activity
             android:name=".StudentsActivity"
@@ -25,15 +33,14 @@
             android:name=".ExamsActivity"
             android:exported="true" />
         <activity
-            android:name=".AdminDashboardActivity"
+            android:name=".admin.AdminDashboardActivity"
             android:exported="true" />
         <activity
             android:name=".StudentLoginActivity"
             android:exported="true" />
         <activity
-            android:name=".AdminLoginActivity"
+            android:name=".admin.AdminLoginActivity"
             android:exported="true" />
-
         <activity
             android:name=".MainActivity"
             android:exported="true">

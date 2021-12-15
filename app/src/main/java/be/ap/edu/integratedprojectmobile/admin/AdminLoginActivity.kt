@@ -1,4 +1,4 @@
-package be.ap.edu.integratedprojectmobile
+package be.ap.edu.integratedprojectmobile.admin
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -7,6 +7,9 @@ import android.util.Log
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
+import be.ap.edu.integratedprojectmobile.DatabaseHelper
+import be.ap.edu.integratedprojectmobile.Password
+import be.ap.edu.integratedprojectmobile.R
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
@@ -15,17 +18,17 @@ class AdminLoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_admin_login)
         val dbh: DatabaseHelper = DatabaseHelper(applicationContext)
-        val localDb = dbh.readableDatabase
-        val adminPassFromDb = localDb.rawQuery("SELECT Password FROM Admin LIMIT 1", null)
+//        val localDb = dbh.readableDatabase
+ //       val adminPassFromDb = localDb.rawQuery("SELECT Password FROM Admin LIMIT 1", null)
         var adminPass: String = ""
         var password = ""
         val db = Firebase.firestore
 
-        if (adminPassFromDb.moveToNext()){
-            //Toast.makeText(applicationContext, adminPassFromDb.getString(0), Toast.LENGTH_LONG).show()
-            Log.d("adminPassFromDb 0 ", adminPassFromDb.getString(0))
-            adminPass = adminPassFromDb.getString(0).toString()
-        }
+//        if (adminPassFromDb.moveToNext()){
+//            //Toast.makeText(applicationContext, adminPassFromDb.getString(0), Toast.LENGTH_LONG).show()
+//            Log.d("adminPassFromDb 0 ", adminPassFromDb.getString(0))
+//            adminPass = adminPassFromDb.getString(0).toString()
+//        }
         val toast = Toast.makeText(applicationContext, "Wrong Password!", Toast.LENGTH_LONG);
         val lblLogin = findViewById<TextView>(R.id.lblLogin)
 

@@ -4,41 +4,35 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ExamsActivity">
+    tools:context=".ExamDashboardActivity">
 
-    <LinearLayout
-        android:layout_width="127dp"
-        android:layout_height="60dp"
-        android:orientation="horizontal"
+    <TextView
+        android:id="@+id/txtExamTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleX="2"
+        android:scaleY="2"
+        android:text="TextView"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.973"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.954">
-
-        <Button
-            android:id="@+id/btnNewExam"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="New Exam" />
-    </LinearLayout>
+        app:layout_constraintVertical_bias="0.141" />
 
     <ScrollView
-        android:layout_width="616dp"
-        android:layout_height="530dp"
+        android:layout_width="590dp"
+        android:layout_height="475dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0">
+        app:layout_constraintVertical_bias="1.0"
+        tools:ignore="SpeakableTextPresentCheck">
 
         <LinearLayout
-            android:id="@+id/layoutExamsLinear"
+            android:id="@+id/layoutOefeningen"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical" />
     </ScrollView>
-
 </androidx.constraintlayout.widget.ConstraintLayout>
