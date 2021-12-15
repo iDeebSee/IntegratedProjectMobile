@@ -14,6 +14,7 @@ import android.location.Location
 import android.location.LocationListener
 import android.util.Log
 import android.widget.Button
+import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
@@ -23,17 +24,62 @@ import org.w3c.dom.Text
 
 
 class StudentsActivity : AppCompatActivity() {
+
+    var getLon: String = ""
+    var getLat: String = ""
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_students)
+        val layout = findViewById<LinearLayout>(R.id.LinearLayoutSA)
+        val db = Firebase.firestore
+        //val uid = intent.getStringExtra("snummer")
+
         getLocation()
+
+        db.collection("exams")
+            .get()
+            .addOnSuccessListener { result ->
+                for (document in result) {
+                    layout.addView(createNewTextView(document.data["name"].toString()))
+
+                    Log.d(TAG, "${document.id} => ${document.data}")
+                }
+            }
+            .addOnFailureListener { exception ->
+                Log.w(TAG, "Error getting documents.", exception)
+            }
+    }
+
+    fun createNewTextView(text:String): TextView {
+        val uid = intent.getStringExtra("snummer")
+        val lparams = LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.WRAP_CONTENT,
+            LinearLayout.LayoutParams.WRAP_CONTENT,
+            1.0f
+        )
+        lparams.setMargins(0, 0, 0, 15)
+        val txt = TextView(this)
+        txt.text = text
+        txt.layoutParams = lparams
+        Log.d("id", txt.id.toString())
+        txt.setOnClickListener{
+            val intent = Intent(this, StudentExamActivity::class.java)
+            intent.putExtra("examName",txt.text.toString())
+            intent.putExtra("snummer",uid)
+            intent.putExtra("lon",getLon)
+            intent.putExtra("lat",getLat)
+            startActivity(intent)
+            Log.d("child", txt.text.toString())
+        }
+        return  txt
     }
 
     var locationNetwork: Location? = null
     var locationGps: Location? = null
 
     fun getLocation() {
-
+        val uid = intent.getStringExtra("snummer")
         if (ActivityCompat.checkSelfPermission(
                 this,
                 android.Manifest.permission.ACCESS_COARSE_LOCATION
@@ -51,8 +97,8 @@ class StudentsActivity : AppCompatActivity() {
             )
         }
 
-        val uid = intent.getStringExtra("snummer") //Firebase.auth.currentUser?.uid
-        Toast.makeText(applicationContext, uid.toString(), Toast.LENGTH_LONG).show()
+        //val uid = intent.getStringExtra("snummer") //Firebase.auth.currentUser?.uid
+        //Toast.makeText(applicationContext, uid.toString(), Toast.LENGTH_LONG).show()
         val txtLat = findViewById<TextView>(R.id.txtLat)
         val txtLon = findViewById<TextView>(R.id.txtLon)
         val locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
@@ -72,6 +118,9 @@ class StudentsActivity : AppCompatActivity() {
                         txtLat.text = locationGps!!.latitude.toString()
                         txtLon.text = locationGps!!.longitude.toString()
 
+                        getLon = locationGps!!.longitude.toString()
+                        getLat = locationGps!!.latitude.toString()
+
                         val student = hashMapOf(
                             "longitude" to locationGps!!.longitude,
                             "latitude" to locationGps!!.latitude,
@@ -89,8 +138,6 @@ class StudentsActivity : AppCompatActivity() {
                             .addOnFailureListener { e ->
                                 Log.w(TAG, "Error adding document", e)
                             }
-
-
                     }
                 }
 
@@ -101,20 +148,19 @@ class StudentsActivity : AppCompatActivity() {
 
             }
 
-            if (hasNetwork) { //hierop focussen; andere simulator nexus 9
+            if (hasNetwork) {
                 Log.d("hasNetwork", hasNetwork.toString())
-                //locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 5000, 0F) { p0 ->
                 locationNetwork =
                     locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER)//p0
 
                 Log.d("locationNetwork", locationNetwork.toString())
-//                txtLat.text = locationNetwork!!.latitude.toString() + " [Network]"
-//                txtLon.text = locationNetwork!!.longitude.toString() + " [Network]"
-
                 if (locationNetwork != null) {
                     if (uid != null) {
                         txtLat.text = locationNetwork!!.latitude.toString()
                         txtLon.text = locationNetwork!!.longitude.toString()
+
+                        getLon = locationNetwork!!.longitude.toString()
+                        getLat = locationNetwork!!.latitude.toString()
 
                         val student = hashMapOf(
                             "longitude" to locationNetwork!!.longitude,
@@ -146,4 +192,5 @@ class StudentsActivity : AppCompatActivity() {
             startActivity(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS))
         }
     }
+
 }

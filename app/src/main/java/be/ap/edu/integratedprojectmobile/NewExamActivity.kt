@@ -2,10 +2,12 @@ package be.ap.edu.integratedprojectmobile
 
 
 import android.content.ContentValues.TAG
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.widget.*
 import android.widget.LinearLayout.LayoutParams
@@ -13,8 +15,7 @@ import androidx.core.view.children
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import android.widget.RadioButton
-
-
+import be.ap.edu.integratedprojectmobile.admin.AdminChangePasswordActivity
 
 
 class NewExamActivity : AppCompatActivity() {
@@ -27,15 +28,17 @@ class NewExamActivity : AppCompatActivity() {
         val rdbOpenVraag = findViewById<RadioButton>(R.id.rdbOpenVraag)
         val rdbCodeVraag = findViewById<RadioButton>(R.id.rdbCode)
         val layout = findViewById<LinearLayout>(R.id.layoutNewExam)
+
         val amount = intent.getStringExtra("amount")
         val txtVragen = findViewById<TextView>(R.id.txtVragen)
         val btnSaveExam = findViewById<Button>(R.id.btnSaveExam)
         val db = Firebase.firestore
-        var radioButtonsToDB = ArrayList<String>()
-        var openVragenToDB = ArrayList<String>()
-        var txtTitle = findViewById<TextView>(R.id.txtExamName)
-        var radiobuttonGroupToDB  = ArrayList<String>()
-        var radiobuttonGroupAmount  = ArrayList<Int>()
+        val radioButtonsToDB = ArrayList<String>()
+        val openVragenToDB = ArrayList<String>()
+        val txtTitle = findViewById<TextView>(R.id.txtExamName)
+        val radiobuttonGroupToDB  = ArrayList<String>()
+        val codeVragenToDB = ArrayList<String>()
+        val radiobuttonGroupAmount  = ArrayList<Int>()
 
 
         var questionsList: MutableList<String> = ArrayList()
@@ -56,7 +59,37 @@ class NewExamActivity : AppCompatActivity() {
         }
 
 
+        fun createCodeVraag(text:String){
+            val lparams = LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, 1.0f)
+            lparams.setMargins(0, 0, 0, 15)
+            val txt = TextView(this)
+            txt.isSingleLine = false
+            txt.imeOptions = EditorInfo.IME_FLAG_NO_ENTER_ACTION
+            txt.isSingleLine = false
+            txt.layoutParams = lparams
+            var teller = 0
+            val cleansedText = text.split("_")
+            var finishedText = ""
 
+            for (item in cleansedText){
+                teller++
+                finishedText += "$item ($teller)____ "
+            }
+            txt.text = finishedText
+            layout.addView(txt)
+
+            for(i in 1 .. teller){
+                val view = layoutInflater.inflate(R.layout.code_vraag_layout, null)
+                val etAnswer = view.findViewById<EditText>(R.id.etAnswer)
+                etAnswer.hint = i.toString()
+                layout.addView(view)
+            }
+
+
+
+            Log.d("cleansed text", cleansedText.toString())
+            codeVragenToDB.add(text)
+        }
 
         fun radioButton(text: Array<String>): ArrayList<RadioButton> {
             val radioButtonArray: ArrayList<RadioButton> = ArrayList()
@@ -112,14 +145,14 @@ class NewExamActivity : AppCompatActivity() {
         btnAdd.setOnClickListener {
 
             if (rdbMultiChoice.isChecked){
-
                 val questions = txtVragen.text.split("-").toTypedArray()
-
                     layout.addView(radioButtonGroup(radioButton(questions)))
             }
-
             if (rdbOpenVraag.isChecked){
                 layout.addView(createNewTextView(txtVragen.text.toString()))
+            }
+            if(rdbCodeVraag.isChecked){
+                createCodeVraag(txtVragen.text.toString())
             }
         }
 
@@ -131,7 +164,7 @@ class NewExamActivity : AppCompatActivity() {
                 "openQuestions" to openVragenToDB.toString(),
                 "radioGroup" to radiobuttonGroupToDB.toString(),
                 "radioGroupAmount" to radiobuttonGroupAmount.toString().split(",", "[", "]").filter{ x:String? -> x != "" },
-
+                "codeVragen" to codeVragenToDB.toString()
             )
 
  //Add a new document with a generated ID
@@ -145,6 +178,10 @@ class NewExamActivity : AppCompatActivity() {
                 .addOnFailureListener { e ->
                     Log.w(TAG, "Error adding document", e)
                 }
+
+                val intent = Intent(this, ExamDashboardActivity::class.java)
+                intent.putExtra("examName",txtTitle.text.toString())
+                startActivity(intent)
 
         }
     }

@@ -1,31 +1,36 @@
 package be.ap.edu.integratedprojectmobile
 
-import android.content.ContentValues.TAG
+import android.content.ContentValues
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.*
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
-class ExamDashboardActivity : AppCompatActivity() {
+class StudentExamActivity : AppCompatActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_exam_dashboard)
+        setContentView(R.layout.activity_student_exam)
+
+        val uid = intent.getStringExtra("snummer")
+        val lon = intent.getStringExtra("lon")
+        val lat = intent.getStringExtra("lat")
 
         val db = Firebase.firestore
-        val txtExamTitle = findViewById<TextView>(R.id.txtExamTitle)
+        val txtExamTitle = findViewById<TextView>(R.id.tvStudentExamTitle)
         val examName=intent.getStringExtra("examName")
-        val layout = findViewById<LinearLayout>(R.id.layoutOefeningen)
+        val layout = findViewById<LinearLayout>(R.id.LinearLayoutOefningen)
         txtExamTitle.text = examName.toString()
-        val btnSave = findViewById<Button>(R.id.btnSaveOplossing)
+        val btnSubmit = findViewById<Button>(R.id.btnStudentExamSubmit)
         val openVragenAntwoord : ArrayList<String> = ArrayList()
         val openVragenVeld : ArrayList<TextView> = ArrayList()
 
         var textViewTeller = 0
-        fun createNewTextView(text:String):TextView {
+        fun createNewTextView(text:String): TextView {
             val lparams = LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.WRAP_CONTENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT,
@@ -150,37 +155,41 @@ class ExamDashboardActivity : AppCompatActivity() {
 
                 val codeQuestionsToString = result.data?.get("codeVragen").toString()
                 if (result.data?.get("codeVragen").toString() != "" && result.data?.get("codeVragen").toString() != "[]"){
-                        createCodeVraag(codeQuestionsToString)
+                    createCodeVraag(codeQuestionsToString)
                 }
 
-                Log.d(TAG, "${result.id} => ${result.data?.get("multipleChoice").toString()}")
+                Log.d(ContentValues.TAG, "${result.id} => ${result.data?.get("multipleChoice").toString()}")
 
             }
             .addOnFailureListener { exception ->
-                Log.w(TAG, "Error getting documents.", exception)
+                Log.w(ContentValues.TAG, "Error getting documents.", exception)
             }
 
 
-        btnSave.setOnClickListener {
-            for(item:TextView in openVragenVeld){
+        btnSubmit.setOnClickListener {
+            for(item: TextView in openVragenVeld){
                 openVragenAntwoord.add(item.text.toString())
                 Log.d("btn save openQ text", item.text.toString())
             }
 
             val examAnswers = hashMapOf(
-                "openQuestionsAnswers" to openVragenAntwoord.toString().split(",", "[", "]").filter{ x:String? -> x != "" }
+                "openQuestionsAnswers" to openVragenAntwoord.toString().split(",", "[", "]").filter{ x:String? -> x != "" },
+                "lon" to lon,
+                "lat" to lat,
+                "student" to uid
             )
-            db.collection("solutions")
-                .document(txtExamTitle.text.toString())
+            db.collection("studentanswers")
+                .document(txtExamTitle.text.toString()+"-"+uid)
                 .set(examAnswers)
                 .addOnSuccessListener { documentReference ->
-                    Log.d(TAG, "DocumentSnapshot added with ID: ${documentReference}")
+                    Log.d(ContentValues.TAG, "DocumentSnapshot added with ID: ${documentReference}")
                     Toast.makeText(applicationContext, "Examen is opgeslagen!", Toast.LENGTH_LONG).show()
                 }
                 .addOnFailureListener { e ->
-                    Log.w(TAG, "Error adding document", e)
+                    Log.w(ContentValues.TAG, "Error adding document", e)
                 }
 
         }
     }
+
 }
