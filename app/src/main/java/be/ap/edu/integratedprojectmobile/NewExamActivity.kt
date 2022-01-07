@@ -3,6 +3,7 @@ package be.ap.edu.integratedprojectmobile
 
 import android.content.ContentValues.TAG
 import android.content.Intent
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -31,10 +32,12 @@ class NewExamActivity : AppCompatActivity() {
 
         val amount = intent.getStringExtra("amount")
         val txtVragen = findViewById<TextView>(R.id.txtVragen)
+        val vraagTitel = findViewById<TextView>(R.id.txtVraagTitel)
         val btnSaveExam = findViewById<Button>(R.id.btnSaveExam)
         val db = Firebase.firestore
         val radioButtonsToDB = ArrayList<String>()
         val openVragenToDB = ArrayList<String>()
+        val titlesToDB = ArrayList<String>()
         val txtTitle = findViewById<TextView>(R.id.txtExamName)
         val radiobuttonGroupToDB  = ArrayList<String>()
         val codeVragenToDB = ArrayList<String>()
@@ -42,6 +45,18 @@ class NewExamActivity : AppCompatActivity() {
 
 
         var questionsList: MutableList<String> = ArrayList()
+
+        fun addTitle(text:String):TextView{
+            val lparams = LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, 1.0f)
+            lparams.setMargins(0, 0, 0, 15)
+
+            val txt = TextView(this)
+            txt.text = text
+            txt.setTextColor(Color.BLACK)
+            txt.setTextSize(20f)
+            titlesToDB.add(txt.text.toString())
+            return txt
+        }
 
         fun createNewTextView(text:String):TextView {
             val lparams = LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, 1.0f)
@@ -111,7 +126,7 @@ class NewExamActivity : AppCompatActivity() {
 
 
 
-        fun radioButtonGroup(radioButtons: ArrayList<RadioButton>): RadioGroup {
+        fun radioButtonGroup(title:TextView, radioButtons: ArrayList<RadioButton>): RadioGroup {
 
             val radioButtonGroup = RadioGroup(this)
             radioButtonGroup.layoutParams  = LayoutParams(
@@ -119,6 +134,8 @@ class NewExamActivity : AppCompatActivity() {
                 LayoutParams.WRAP_CONTENT,
             )
             (radioButtonGroup.layoutParams as LayoutParams).setMargins(0, 0, 0, 15)
+
+            radioButtonGroup.addView(title)
             for(radio in radioButtons){
                 radioButtonGroup.addView(radio)
             }
@@ -135,6 +152,7 @@ class NewExamActivity : AppCompatActivity() {
             for (rdb in listOfRadioButtons){
                 radiobuttonGroupToDB.add(rdb.text.toString())
             }
+            //radiobuttonGroupToDB.add(title.text.toString())
 
             Log.d("radiobuttonGroup", radioButtonGroup.toString())
             return radioButtonGroup
@@ -146,7 +164,12 @@ class NewExamActivity : AppCompatActivity() {
 
             if (rdbMultiChoice.isChecked){
                 val questions = txtVragen.text.split("-").toTypedArray()
-                    layout.addView(radioButtonGroup(radioButton(questions)))
+                //val titleArray = questions.toString().split(";").toTypedArray()
+
+
+                //val questionAndTitle = questions.toString().split(";", "-").toTypedArray()
+
+                layout.addView(radioButtonGroup(addTitle(vraagTitel.text.toString()),radioButton(questions)))
             }
             if (rdbOpenVraag.isChecked){
                 layout.addView(createNewTextView(txtVragen.text.toString()))
@@ -161,6 +184,7 @@ class NewExamActivity : AppCompatActivity() {
             val exam = hashMapOf(
                 "name" to txtTitle.text.toString(),
                 "multipleChoice" to radioButtonsToDB.toString().split(",", "[", "]").filter{ x:String? -> x != "" },
+                "mcTitles" to titlesToDB.toString(),
                 "openQuestions" to openVragenToDB.toString(),
                 "radioGroup" to radiobuttonGroupToDB.toString(),
                 "radioGroupAmount" to radiobuttonGroupAmount.toString().split(",", "[", "]").filter{ x:String? -> x != "" },

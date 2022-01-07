@@ -1,6 +1,7 @@
 package be.ap.edu.integratedprojectmobile
 
 import android.content.ContentValues.TAG
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -23,6 +24,22 @@ class ExamDashboardActivity : AppCompatActivity() {
         val btnSave = findViewById<Button>(R.id.btnSaveOplossing)
         val openVragenAntwoord : ArrayList<String> = ArrayList()
         val openVragenVeld : ArrayList<TextView> = ArrayList()
+
+
+        fun addTitle(text:String):TextView{
+            val lparams = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                1.0f
+            )
+            lparams.setMargins(0, 0, 0, 15)
+
+            val txt = TextView(this)
+            txt.text = text
+            txt.setTextColor(Color.BLACK)
+            txt.setTextSize(20f)
+            return txt
+        }
 
         var textViewTeller = 0
         fun createNewTextView(text:String):TextView {
@@ -94,7 +111,7 @@ class ExamDashboardActivity : AppCompatActivity() {
 
 
 
-        fun radioButtonGroup(radioButtons: ArrayList<RadioButton>): RadioGroup {
+        fun radioButtonGroup(title:TextView, radioButtons: ArrayList<RadioButton>): RadioGroup {
 
             val radioButtonGroup = RadioGroup(this)
             radioButtonGroup.layoutParams  = LinearLayout.LayoutParams(
@@ -102,6 +119,7 @@ class ExamDashboardActivity : AppCompatActivity() {
                 LinearLayout.LayoutParams.WRAP_CONTENT,
             )
             (radioButtonGroup.layoutParams as LinearLayout.LayoutParams).setMargins(0, 0, 0, 15)
+            radioButtonGroup.addView(title)
             for(radio in radioButtons){
                 radioButtonGroup.addView(radio)
             }
@@ -117,26 +135,42 @@ class ExamDashboardActivity : AppCompatActivity() {
                 val codeQuestions: ArrayList<String> = ArrayList()
                 val mcQuestions: ArrayList<String> = ArrayList()
                 val oQuestions: ArrayList<String> = ArrayList()
-                Log.d("radioGroupAmount",result.data?.get("radioGroupAmount").toString())
                 val amount: Any? = result.data?.get("radioGroupAmount")//.toString().split(",").toString()
                 val theArray = amount.toString().split(",", "[", "]", " ").toTypedArray()
                 Log.d("amount", amount.toString())
                 var theAmount: String = ""
                 val mySize = theArray.size
-                val resultaat = result.data?.get("multipleChoice").toString().split(",","[", "]").filter{ x:String? -> x != "" }.toTypedArray()
+                Log.d("theArray size", mySize.toString())
+                val mcResultaat = result.data?.get("multipleChoice").toString().split(",","[", "]").filter{ x:String? -> x != "" }.toTypedArray()
+                val resultaat = result.data?.get("radioGroup").toString().split(",","[", "]").filter{ x:String? -> x != "" }.toTypedArray()
+                val titles = result.data?.get("mcTitles").toString().split(",", "[", "]").filter { x:String? -> x != "" }.toTypedArray()
+                Log.d("titles size", titles.size.toString())
+                var title:String = ""
+                //var teller = 0
+                for (i in 0 until titles.size){
+                    title = titles[i]
+                    Log.d("radioGroupSize i:", i.toString())
+                }
                 for (item in 0 until mySize - 1){
                     if (theArray[item] != "[" && theArray[item] != "]" && theArray[item] != ""){
                         theAmount = theArray[item]
                         Log.d("the amount $item: ", theAmount)
                         for (i in 0 until theAmount.toInt()){
-                            Log.d("$i", theAmount)
-                            mcQuestions.add(resultaat[i])
+                            //Log.d("$i", theAmount)
+                            mcQuestions.add(mcResultaat[i])
+                            //teller++
                         }
+                        //Log.d("teller", teller.toString())
+                        //Log.d("title", resultaat[teller])
+                        //Log.d("radioGroupSize", radioGroupSize.toString())
+                        layout.addView(radioButtonGroup(addTitle(title),radioButton(mcQuestions.toTypedArray())))
                     }
-                    layout.addView(radioButtonGroup(radioButton(mcQuestions.toTypedArray())))
+
+
                     mcQuestions.clear()
 
                 }
+
 
                 val openQuestions = result.data?.get("openQuestions")?.toString()
                     ?.split(",", "[", "]")?.filter{ x:String? -> x != "" }?.toTypedArray()
