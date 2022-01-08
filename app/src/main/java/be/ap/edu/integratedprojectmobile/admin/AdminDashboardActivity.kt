@@ -27,6 +27,7 @@ class AdminDashboardActivity : AppCompatActivity() {
         val btnExams = findViewById<Button>(R.id.btnExams)
         val btnStudents = findViewById<Button>(R.id.btnStudents)
         val btnChangePass = findViewById<Button>(R.id.btnPassword)
+        val btnCSV = findViewById<Button>(R.id.btnCSVImport)
 
         db.collection("exams")
             .get()
@@ -72,5 +73,12 @@ class AdminDashboardActivity : AppCompatActivity() {
             val changePassIntent = Intent(this, AdminChangePasswordActivity::class.java)
             startActivity(changePassIntent)
         }
+
+        btnCSV.setOnClickListener {
+            val CSVIntent = Intent(this, AdminCSV::class.java)
+            startActivity(CSVIntent)
+        }
+
+
     }
 }

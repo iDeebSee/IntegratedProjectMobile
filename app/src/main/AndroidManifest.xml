@@ -15,19 +15,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.IntegratedProjectMobile">
         <activity
-            android:name=".StudentExamActivity"
-            android:exported="true" />
+            android:name=".AdminCSV"
+            android:exported="false" />
         <activity
-            android:name=".ExamDashboardActivity"
-            android:exported="true" />
-        <activity
-            android:name=".PopUpWindow"
-            android:exported="true" />
-        <activity
-            android:name=".NewExamActivity"
-            android:exported="true" />
-        <activity
-            android:name=".admin.AdminChangePasswordActivity"
+            android:name=".AdminChangePasswordActivity"
             android:exported="true" />
         <activity
             android:name=".StudentsActivity"
@@ -36,13 +27,13 @@
             android:name=".ExamsActivity"
             android:exported="true" />
         <activity
-            android:name=".admin.AdminDashboardActivity"
+            android:name=".AdminDashboardActivity"
             android:exported="true" />
         <activity
             android:name=".StudentLoginActivity"
             android:exported="true" />
         <activity
-            android:name=".admin.AdminLoginActivity"
+            android:name=".AdminLoginActivity"
             android:exported="true" />
         <activity
             android:name=".MainActivity"

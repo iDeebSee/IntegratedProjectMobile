@@ -25,6 +25,8 @@ class DatabaseHelper(context: Context) :
         firstPass.password?.let { Log.d("---- first password ----", it) }
     }
 
+
+
     override fun onUpgrade(sqLiteDatabase: SQLiteDatabase, i: Int, i1: Int) {
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME)
         onCreate(sqLiteDatabase)
@@ -51,7 +53,10 @@ class DatabaseHelper(context: Context) :
         Log.d(TAG, "updateName: query: $query")
         Log.d(TAG, "updateName: Setting name to $newPassword")
         db.execSQL(query)
-    }//result = data.getString(0);
+    }
+
+
+    //result = data.getString(0);
 
     //Log.d(TAG, "getAdminPass: query: " + query);
     //data.getString(0);
