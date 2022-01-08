@@ -20,22 +20,29 @@
 
         <Button
             android:id="@+id/btnExams"
-            android:layout_width="310dp"
+            android:layout_width="255dp"
             android:layout_height="match_parent"
             android:text="Exams" />
 
         <Button
             android:id="@+id/btnStudents"
-            android:layout_width="310dp"
+            android:layout_width="255dp"
             android:layout_height="match_parent"
             android:text="Students" />
 
         <Button
             android:id="@+id/btnPassword"
-            android:layout_width="173dp"
+            android:layout_width="255dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="Change Password" />
+
+        <Button
+            android:id="@+id/btnCSVImport"
+            android:layout_width="255dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="CSV import" />
 
     </LinearLayout>
 

@@ -1,4 +1,4 @@
-package be.ap.edu.integratedprojectmobile
+package be.ap.edu.integratedprojectmobile.exam
 
 
 import android.content.ContentValues.TAG
@@ -8,15 +8,13 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.widget.*
 import android.widget.LinearLayout.LayoutParams
-import androidx.core.view.children
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import android.widget.RadioButton
-import be.ap.edu.integratedprojectmobile.admin.AdminChangePasswordActivity
+import be.ap.edu.integratedprojectmobile.R
 
 
 class NewExamActivity : AppCompatActivity() {

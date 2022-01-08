@@ -4,16 +4,18 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/School/AP3/MobileProject/IntegratedProjectMobile/app/src/main/res/layout/activity_admin_change_password.xml" value="0.2" />
+        <entry key="..\:/School/AP3/MobileProject/IntegratedProjectMobile/app/src/main/res/layout/activity_admin_csv.xml" value="0.12467948717948718" />
         <entry key="..\:/School/AP3/MobileProject/IntegratedProjectMobile/app/src/main/res/layout/activity_admin_dashboard.xml" value="0.2" />
         <entry key="..\:/School/AP3/MobileProject/IntegratedProjectMobile/app/src/main/res/layout/activity_admin_login.xml" value="0.2" />
-        <entry key="..\:/School/AP3/MobileProject/IntegratedProjectMobile/app/src/main/res/layout/activity_exams.xml" value="0.176" />
+        <entry key="..\:/School/AP3/MobileProject/IntegratedProjectMobile/app/src/main/res/layout/activity_exam_dashboard.xml" value="0.4" />
+        <entry key="..\:/School/AP3/MobileProject/IntegratedProjectMobile/app/src/main/res/layout/activity_exams.xml" value="0.152" />
         <entry key="..\:/School/AP3/MobileProject/IntegratedProjectMobile/app/src/main/res/layout/activity_main.xml" value="0.2" />
+        <entry key="..\:/School/AP3/MobileProject/IntegratedProjectMobile/app/src/main/res/layout/activity_new_exam.xml" value="0.2" />
+        <entry key="..\:/School/AP3/MobileProject/IntegratedProjectMobile/app/src/main/res/layout/activity_pop_up_window.xml" value="0.536" />
+        <entry key="..\:/School/AP3/MobileProject/IntegratedProjectMobile/app/src/main/res/layout/activity_student_exam.xml" value="0.152" />
         <entry key="..\:/School/AP3/MobileProject/IntegratedProjectMobile/app/src/main/res/layout/activity_student_login.xml" value="0.14402173913043478" />
         <entry key="..\:/School/AP3/MobileProject/IntegratedProjectMobile/app/src/main/res/layout/activity_students.xml" value="0.2" />
-        <entry key="..\:/Users/MoAzd/Documents/GitHub/IntegratedProjectMobile/app/src/main/res/layout-sw600dp/activity_admin_csv.xml" value="0.271875" />
-        <entry key="..\:/Users/MoAzd/Documents/GitHub/IntegratedProjectMobile/app/src/main/res/layout/activity_admin_csv.xml" value="0.3625" />
-        <entry key="..\:/Users/MoAzd/Documents/GitHub/IntegratedProjectMobile/app/src/main/res/layout/activity_admin_dashboard.xml" value="0.264" />
-        <entry key="..\:/Users/MoAzd/Documents/GitHub/IntegratedProjectMobile/app/src/main/res/layout/activity_admin_login.xml" value="0.3625" />
+        <entry key="..\:/School/AP3/MobileProject/IntegratedProjectMobile/app/src/main/res/layout/code_vraag_layout.xml" value="0.176" />
       </map>
     </option>
   </component>

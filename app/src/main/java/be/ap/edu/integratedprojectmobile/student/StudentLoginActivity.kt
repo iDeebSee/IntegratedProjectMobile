@@ -1,4 +1,4 @@
-package be.ap.edu.integratedprojectmobile
+package be.ap.edu.integratedprojectmobile.student
 
 import android.content.ContentValues
 import android.content.Intent
@@ -8,7 +8,7 @@ import android.util.Log
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.Spinner
-import android.widget.TextView
+import be.ap.edu.integratedprojectmobile.R
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 

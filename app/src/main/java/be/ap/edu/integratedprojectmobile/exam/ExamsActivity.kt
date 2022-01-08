@@ -1,24 +1,16 @@
-package be.ap.edu.integratedprojectmobile
+package be.ap.edu.integratedprojectmobile.exam
 
 import android.content.ContentValues.TAG
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.View
-import android.view.inputmethod.EditorInfo
 import android.widget.Button
-import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.core.view.children
-import be.ap.edu.integratedprojectmobile.admin.AdminLoginActivity
+import be.ap.edu.integratedprojectmobile.R
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import kotlin.math.log
-import android.view.ViewGroup
-
-
 
 
 class ExamsActivity : AppCompatActivity() {

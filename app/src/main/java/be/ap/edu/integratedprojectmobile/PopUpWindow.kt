@@ -18,6 +18,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.graphics.ColorUtils
+import be.ap.edu.integratedprojectmobile.exam.NewExamActivity
+
 //import kotlinx.android.synthetic.main.popup_window.*
 
 class PopUpWindow : AppCompatActivity() {

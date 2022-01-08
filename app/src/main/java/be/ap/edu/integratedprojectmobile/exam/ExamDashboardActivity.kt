@@ -1,13 +1,13 @@
-package be.ap.edu.integratedprojectmobile
+package be.ap.edu.integratedprojectmobile.exam
 
 import android.content.ContentValues.TAG
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.*
+import be.ap.edu.integratedprojectmobile.R
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
@@ -24,7 +24,10 @@ class ExamDashboardActivity : AppCompatActivity() {
         val btnSave = findViewById<Button>(R.id.btnSaveOplossing)
         val openVragenAntwoord : ArrayList<String> = ArrayList()
         val openVragenVeld : ArrayList<TextView> = ArrayList()
-
+        val mcVragenAntwoord : ArrayList<String> = ArrayList()
+        val mcVragenVeld : ArrayList<RadioButton> = ArrayList()
+        val codeVragenAntwoord : ArrayList<String> = ArrayList()
+        val codeVragenVeld : ArrayList<TextView> = ArrayList()
 
         fun addTitle(text:String):TextView{
             val lparams = LinearLayout.LayoutParams(
@@ -82,6 +85,7 @@ class ExamDashboardActivity : AppCompatActivity() {
                 finishedText += "$item ($teller)____ "
             }
             txt.text = finishedText
+
             layout.addView(txt)
 
             for(i in 1 .. teller){
@@ -89,6 +93,7 @@ class ExamDashboardActivity : AppCompatActivity() {
                 val etAnswer = view.findViewById<EditText>(R.id.etAnswer)
                 etAnswer.hint = i.toString()
                 layout.addView(view)
+                codeVragenVeld.add(etAnswer)
             }
         }
 
@@ -103,6 +108,7 @@ class ExamDashboardActivity : AppCompatActivity() {
                 )
                 rdbNewRadioButton.text = rdb
                 radioButtonArray.add(rdbNewRadioButton)
+                mcVragenVeld.add(rdbNewRadioButton)
                 Log.d("radiobutton", rdbNewRadioButton.text.toString())
             }
 
@@ -197,12 +203,29 @@ class ExamDashboardActivity : AppCompatActivity() {
 
         btnSave.setOnClickListener {
             for(item:TextView in openVragenVeld){
+
                 openVragenAntwoord.add(item.text.toString())
                 Log.d("btn save openQ text", item.text.toString())
             }
 
+            for(item:RadioButton in mcVragenVeld){
+                if (item.isChecked()){
+                    mcVragenAntwoord.add(item.text.toString())
+                }else{
+                    item.isChecked = false
+                }
+
+            }
+            for (item:TextView in codeVragenVeld){
+                codeVragenAntwoord.add(item.text.toString())
+                Log.d("code questions",item.text.toString())
+            }
+
             val examAnswers = hashMapOf(
-                "openQuestionsAnswers" to openVragenAntwoord.toString().split(",", "[", "]").filter{ x:String? -> x != "" }
+                "openQuestionsAnswers" to openVragenAntwoord.toString().split(",", "[", "]").filter{ x:String? -> x != "" },
+                "mcQuestionsAnswers" to mcVragenAntwoord.toString().split(",", "[", "]").filter{ x:String? -> x != "" },
+                "codeQuestionsAnswers" to codeVragenAntwoord.toString().split(",", "[", "]").filter{ x:String? -> x != "" }
+
             )
             db.collection("solutions")
                 .document(txtExamTitle.text.toString())
@@ -214,6 +237,9 @@ class ExamDashboardActivity : AppCompatActivity() {
                 .addOnFailureListener { e ->
                     Log.w(TAG, "Error adding document", e)
                 }
+            openVragenAntwoord.clear()
+            mcVragenAntwoord.clear()
+            codeVragenAntwoord.clear()
 
         }
     }

@@ -7,7 +7,7 @@ import android.util.Log
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
-import be.ap.edu.integratedprojectmobile.DatabaseHelper
+import be.ap.edu.integratedprojectmobile.database.DatabaseHelper
 import be.ap.edu.integratedprojectmobile.Password
 import be.ap.edu.integratedprojectmobile.R
 import com.google.firebase.firestore.ktx.firestore

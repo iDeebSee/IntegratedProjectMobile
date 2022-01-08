@@ -8,9 +8,9 @@ import android.util.Log
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.Spinner
-import be.ap.edu.integratedprojectmobile.ExamsActivity
+import be.ap.edu.integratedprojectmobile.exam.ExamsActivity
 import be.ap.edu.integratedprojectmobile.R
-import be.ap.edu.integratedprojectmobile.StudentsActivity
+import be.ap.edu.integratedprojectmobile.student.StudentsActivity
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 

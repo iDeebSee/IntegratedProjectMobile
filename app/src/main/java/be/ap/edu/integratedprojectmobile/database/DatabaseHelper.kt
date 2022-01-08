@@ -1,14 +1,12 @@
-package be.ap.edu.integratedprojectmobile
+package be.ap.edu.integratedprojectmobile.database
 
-import android.database.sqlite.SQLiteDatabase.CursorFactory
 import android.database.sqlite.SQLiteOpenHelper
 import android.database.sqlite.SQLiteDatabase
-import be.ap.edu.integratedprojectmobile.DatabaseHelper
 import kotlin.Throws
 import android.content.ContentValues
 import android.content.Context
-import android.database.Cursor
 import android.util.Log
+import be.ap.edu.integratedprojectmobile.Password
 import java.security.NoSuchAlgorithmException
 import java.security.NoSuchProviderException
 

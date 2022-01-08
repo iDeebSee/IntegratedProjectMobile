@@ -1,6 +1,5 @@
-package be.ap.edu.integratedprojectmobile
+package be.ap.edu.integratedprojectmobile.student
 
-import android.Manifest
 import android.content.ContentValues.TAG
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
@@ -9,18 +8,14 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.LocationManager
 import android.provider.Settings
-import android.location.Criteria
 import android.location.Location
-import android.location.LocationListener
 import android.util.Log
-import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
-import android.widget.Toast
 import androidx.core.app.ActivityCompat
+import be.ap.edu.integratedprojectmobile.R
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import org.w3c.dom.Text
 
 
 class StudentsActivity : AppCompatActivity() {
@@ -154,6 +149,7 @@ class StudentsActivity : AppCompatActivity() {
                     locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER)//p0
 
                 Log.d("locationNetwork", locationNetwork.toString())
+
                 if (locationNetwork != null) {
                     if (uid != null) {
                         txtLat.text = locationNetwork!!.latitude.toString()

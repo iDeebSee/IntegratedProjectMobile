@@ -15,25 +15,34 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.IntegratedProjectMobile">
         <activity
-            android:name=".AdminCSV"
+            android:name=".admin.AdminCSV"
             android:exported="false" />
         <activity
-            android:name=".AdminChangePasswordActivity"
+            android:name=".admin.AdminChangePasswordActivity"
             android:exported="true" />
         <activity
-            android:name=".StudentsActivity"
+            android:name=".student.StudentsActivity"
             android:exported="true" />
         <activity
-            android:name=".ExamsActivity"
+            android:name=".exam.ExamsActivity"
             android:exported="true" />
         <activity
-            android:name=".AdminDashboardActivity"
+            android:name=".admin.AdminDashboardActivity"
             android:exported="true" />
         <activity
-            android:name=".StudentLoginActivity"
+            android:name=".student.StudentLoginActivity"
             android:exported="true" />
         <activity
-            android:name=".AdminLoginActivity"
+            android:name=".admin.AdminLoginActivity"
+            android:exported="true" />
+        <activity
+            android:name=".exam.NewExamActivity"
+            android:exported="true" />
+        <activity
+            android:name=".exam.ExamDashboardActivity"
+            android:exported="true" />
+        <activity
+            android:name=".student.StudentExamActivity"
             android:exported="true" />
         <activity
             android:name=".MainActivity"

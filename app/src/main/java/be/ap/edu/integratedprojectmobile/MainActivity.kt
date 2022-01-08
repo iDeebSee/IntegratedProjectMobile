@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import be.ap.edu.integratedprojectmobile.admin.AdminLoginActivity
+import be.ap.edu.integratedprojectmobile.student.StudentLoginActivity
+
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
