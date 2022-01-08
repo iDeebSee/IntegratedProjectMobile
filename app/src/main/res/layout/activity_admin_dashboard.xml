@@ -8,8 +8,8 @@
 
     <LinearLayout
         android:id="@+id/linearLayout2"
-        android:layout_width="1278dp"
-        android:layout_height="69dp"
+        android:layout_width="1027dp"
+        android:layout_height="73dp"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -18,49 +18,42 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.992">
 
-        <LinearLayout
-            android:layout_width="426dp"
+        <Button
+            android:id="@+id/btnCSVImport"
+            android:layout_width="fill_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal">
+            android:layout_weight="1"
+            android:text="Import student CSV"
 
-            <Button
-                android:id="@+id/btnPassword"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:text="Change Password" />
-        </LinearLayout>
+            />
 
-        <LinearLayout
-            android:layout_width="426dp"
+        <Button
+            android:id="@+id/btnPassword"
+            android:layout_width="fill_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal">
+            android:layout_weight="1"
+            android:text="Change Password" />
 
-            <Button
-                android:id="@+id/btnExams"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="Exams" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="426dp"
+        <Button
+            android:id="@+id/btnExams"
+            android:layout_width="fill_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal">
+            android:text="Exams"
+            android:layout_weight="1"/>
 
-            <Button
-                android:id="@+id/btnStudents"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="Students" />
+        <Button
+            android:id="@+id/btnStudents"
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:text="Students"
+            android:layout_weight="1"/>
 
-        </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/linearLayout4"
-        android:layout_width="1272dp"
-        android:layout_height="93dp"
+        android:layout_width="1021dp"
+        android:layout_height="96dp"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -81,8 +74,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                tools:ignore="SpeakableTextPresentCheck"
-                android:spinnerMode="dropdown"/>
+                android:spinnerMode="dropdown"
+                tools:ignore="SpeakableTextPresentCheck" />
 
         </LinearLayout>
 
@@ -112,8 +105,8 @@
 
     <LinearLayout
         android:id="@+id/llInformationLayout"
-        android:layout_width="1270dp"
-        android:layout_height="534dp"
+        android:layout_width="1019dp"
+        android:layout_height="423dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
         app:layout_constraintEnd_toEndOf="parent"
