@@ -17,27 +17,32 @@
         android:autoSizeMinTextSize="16pt"
         android:text="Student Log in"
         android:textSize="64sp"
-        app:layout_constraintBottom_toTopOf="@+id/txtSnummer"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
-        android:id="@+id/txtSnummer"
+    <Button
+        android:id="@+id/btnStudentLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="100dp"
-        android:layout_marginEnd="100dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:scaleX="2"
-        android:scaleY="2"
-        android:text="sxxxxxx@ap.be"
+        android:layout_marginEnd="196dp"
+        android:text="Log in"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lblLogin"
+        app:layout_constraintVertical_bias="0.244" />
+
+    <Spinner
+        android:id="@+id/spnrStudentsLogin"
+        android:layout_width="436dp"
+        android:layout_height="74dp"
+        android:layout_marginEnd="52dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btnStudentLogin"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.6" />
+        app:layout_constraintTop_toBottomOf="@+id/lblLogin"
+        app:layout_constraintVertical_bias="0.24" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

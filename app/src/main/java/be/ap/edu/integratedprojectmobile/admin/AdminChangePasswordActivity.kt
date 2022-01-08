@@ -1,4 +1,4 @@
-package be.ap.edu.integratedprojectmobile
+package be.ap.edu.integratedprojectmobile.admin
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -7,6 +7,8 @@ import android.util.Log
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
+import be.ap.edu.integratedprojectmobile.DatabaseHelper
+import be.ap.edu.integratedprojectmobile.R
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
