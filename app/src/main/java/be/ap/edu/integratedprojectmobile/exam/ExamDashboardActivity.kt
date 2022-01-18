@@ -1,6 +1,7 @@
 package be.ap.edu.integratedprojectmobile.exam
 
 import android.content.ContentValues.TAG
+import android.content.Intent
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -8,6 +9,8 @@ import android.util.Log
 import android.view.inputmethod.EditorInfo
 import android.widget.*
 import be.ap.edu.integratedprojectmobile.R
+import be.ap.edu.integratedprojectmobile.admin.AdminDashboardActivity
+import be.ap.edu.integratedprojectmobile.student.StudentsActivity
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
@@ -162,13 +165,10 @@ class ExamDashboardActivity : AppCompatActivity() {
                         theAmount = theArray[item]
                         Log.d("the amount $item: ", theAmount)
                         for (i in 0 until theAmount.toInt()){
-                            //Log.d("$i", theAmount)
+
                             mcQuestions.add(mcResultaat[i])
-                            //teller++
+
                         }
-                        //Log.d("teller", teller.toString())
-                        //Log.d("title", resultaat[teller])
-                        //Log.d("radioGroupSize", radioGroupSize.toString())
                         layout.addView(radioButtonGroup(addTitle(title),radioButton(mcQuestions.toTypedArray())))
                     }
 
@@ -232,7 +232,7 @@ class ExamDashboardActivity : AppCompatActivity() {
                 .set(examAnswers)
                 .addOnSuccessListener { documentReference ->
                     Log.d(TAG, "DocumentSnapshot added with ID: ${documentReference}")
-                    Toast.makeText(applicationContext, "Examen is opgeslagen!", Toast.LENGTH_LONG).show()
+                    Toast.makeText(applicationContext, "Examen oplossing is opgeslagen!", Toast.LENGTH_LONG).show()
                 }
                 .addOnFailureListener { e ->
                     Log.w(TAG, "Error adding document", e)
@@ -241,6 +241,8 @@ class ExamDashboardActivity : AppCompatActivity() {
             mcVragenAntwoord.clear()
             codeVragenAntwoord.clear()
 
+            val intent = Intent(this, ExamsActivity::class.java)
+            startActivity(intent)
         }
     }
 }

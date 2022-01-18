@@ -1,6 +1,7 @@
 package be.ap.edu.integratedprojectmobile.student
 
 import android.content.ContentValues
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -21,6 +22,8 @@ class StudentExamActivity : AppCompatActivity() {
         val lon = intent.getStringExtra("lon")
         val lat = intent.getStringExtra("lat")
 
+
+
         val db = Firebase.firestore
         val txtExamTitle = findViewById<TextView>(R.id.tvStudentExamTitle)
         val examName=intent.getStringExtra("examName")
@@ -28,7 +31,28 @@ class StudentExamActivity : AppCompatActivity() {
         txtExamTitle.text = examName.toString()
         val btnSubmit = findViewById<Button>(R.id.btnStudentExamSubmit)
         val openVragenAntwoord : ArrayList<String> = ArrayList()
+        val mcVragenAntwoord : ArrayList<String> = ArrayList()
+        val codeVragenAntwoord : ArrayList<String> = ArrayList()
         val openVragenVeld : ArrayList<TextView> = ArrayList()
+        val mcVragenVeld : ArrayList<RadioButton> = ArrayList()
+        val codeVragenVeld : ArrayList<TextView> = ArrayList()
+
+
+        fun addTitle(text:String):TextView{
+            val lparams = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                1.0f
+            )
+            lparams.setMargins(0, 0, 0, 15)
+
+            val txt = TextView(this)
+            txt.text = text
+            txt.setTextColor(Color.BLACK)
+            txt.setTextSize(20f)
+            return txt
+        }
+
 
         var textViewTeller = 0
         fun createNewTextView(text:String): TextView {
@@ -78,6 +102,7 @@ class StudentExamActivity : AppCompatActivity() {
                 val etAnswer = view.findViewById<EditText>(R.id.etAnswer)
                 etAnswer.hint = i.toString()
                 layout.addView(view)
+                codeVragenVeld.add(etAnswer)
             }
         }
 
@@ -92,6 +117,7 @@ class StudentExamActivity : AppCompatActivity() {
                 )
                 rdbNewRadioButton.text = rdb
                 radioButtonArray.add(rdbNewRadioButton)
+                mcVragenVeld.add(rdbNewRadioButton)
                 Log.d("radiobutton", rdbNewRadioButton.text.toString())
             }
 
@@ -100,7 +126,7 @@ class StudentExamActivity : AppCompatActivity() {
 
 
 
-        fun radioButtonGroup(radioButtons: ArrayList<RadioButton>): RadioGroup {
+        fun radioButtonGroup(title:TextView, radioButtons: ArrayList<RadioButton>): RadioGroup {
 
             val radioButtonGroup = RadioGroup(this)
             radioButtonGroup.layoutParams  = LinearLayout.LayoutParams(
@@ -108,6 +134,7 @@ class StudentExamActivity : AppCompatActivity() {
                 LinearLayout.LayoutParams.WRAP_CONTENT,
             )
             (radioButtonGroup.layoutParams as LinearLayout.LayoutParams).setMargins(0, 0, 0, 15)
+            radioButtonGroup.addView(title)
             for(radio in radioButtons){
                 radioButtonGroup.addView(radio)
             }
@@ -130,6 +157,13 @@ class StudentExamActivity : AppCompatActivity() {
                 var theAmount: String = ""
                 val mySize = theArray.size
                 val resultaat = result.data?.get("multipleChoice").toString().split(",","[", "]").filter{ x:String? -> x != "" }.toTypedArray()
+                val titles = result.data?.get("mcTitles").toString().split(",", "[", "]").filter { x:String? -> x != "" }.toTypedArray()
+                var title:String = ""
+                //var teller = 0
+                for (i in 0 until titles.size){
+                    title = titles[i]
+                    Log.d("radioGroupSize i:", i.toString())
+                }
                 for (item in 0 until mySize - 1){
                     if (theArray[item] != "[" && theArray[item] != "]" && theArray[item] != ""){
                         theAmount = theArray[item]
@@ -138,8 +172,9 @@ class StudentExamActivity : AppCompatActivity() {
                             Log.d("$i", theAmount)
                             mcQuestions.add(resultaat[i])
                         }
+                        layout.addView(radioButtonGroup(addTitle(title),radioButton(mcQuestions.toTypedArray())))
                     }
-                    layout.addView(radioButtonGroup(radioButton(mcQuestions.toTypedArray())))
+
                     mcQuestions.clear()
 
                 }
@@ -168,13 +203,29 @@ class StudentExamActivity : AppCompatActivity() {
 
 
         btnSubmit.setOnClickListener {
-            for(item: TextView in openVragenVeld){
+            for(item:TextView in openVragenVeld){
+
                 openVragenAntwoord.add(item.text.toString())
                 Log.d("btn save openQ text", item.text.toString())
             }
 
+            for(item:RadioButton in mcVragenVeld){
+                if (item.isChecked()){
+                    mcVragenAntwoord.add(item.text.toString())
+                }else{
+                    item.isChecked = false
+                }
+
+            }
+            for (item:TextView in codeVragenVeld){
+                codeVragenAntwoord.add(item.text.toString())
+                Log.d("code questions",item.text.toString())
+            }
+
             val examAnswers = hashMapOf(
                 "openQuestionsAnswers" to openVragenAntwoord.toString().split(",", "[", "]").filter{ x:String? -> x != "" },
+                "mcQuestionsAnswers" to mcVragenAntwoord.toString().split(",", "[", "]").filter{ x:String? -> x != "" },
+                "codeQuestionsAnswers" to codeVragenAntwoord.toString().split(",", "[", "]").filter{ x:String? -> x != "" },
                 "lon" to lon,
                 "lat" to lat,
                 "student" to uid

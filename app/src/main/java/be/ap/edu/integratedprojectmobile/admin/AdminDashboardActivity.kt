@@ -10,7 +10,7 @@ import android.widget.Button
 import android.widget.Spinner
 import be.ap.edu.integratedprojectmobile.exam.ExamsActivity
 import be.ap.edu.integratedprojectmobile.R
-import be.ap.edu.integratedprojectmobile.student.StudentsActivity
+import be.ap.edu.integratedprojectmobile.student.StudentDashboardActivity
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
@@ -65,8 +65,8 @@ class AdminDashboardActivity : AppCompatActivity() {
         }
 
         btnStudents.setOnClickListener {
-            val studensIntent = Intent(this, StudentsActivity::class.java)
-            startActivity(studensIntent)
+            val studentsIntent = Intent(this, StudentDashboardActivity::class.java)
+            startActivity(studentsIntent)
         }
 
         btnChangePass.setOnClickListener {
