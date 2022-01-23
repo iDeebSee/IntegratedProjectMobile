@@ -25,15 +25,30 @@ import be.ap.edu.integratedprojectmobile.exam.NewExamActivity
 class PopUpWindow : AppCompatActivity() {
     private var popupTitle = ""
     private var popupText = ""
-    private var popupButton = ""
+    private var popupOkButton = ""
+    private var popupNoButton = ""
     private var darkStatusBar = false
     private var amount = 0
     private val title: TextView = findViewById<TextView>(R.id.popup_window_title)
     val text: TextView = findViewById<TextView>(R.id.popup_window_text)
-    val button: Button = findViewById<Button>(R.id.popup_window_button)
+    val OkButton: Button = findViewById<Button>(R.id.popup_window_button_ok)
+    val NoButton: Button = findViewById<Button>(R.id.popup_window_button_no)
     private val background: ConstraintLayout = findViewById<ConstraintLayout>(R.id.popup_window_background)
     private val viewWithBorder: CardView = findViewById<CardView>(R.id.popup_window_view_with_border)
-    private val txtAmount: TextView = findViewById<TextView>(R.id.txtAmount)
+    private var _title = ""
+    private var _text = ""
+    private var _OkButton = ""
+    private var _NoButton = ""
+    public var buttonPressed: String = ""
+
+//    private val txtAmount: TextView = findViewById<TextView>(R.id.txtAmount)
+
+    fun fillIn(_title:String, _text:String, _OkButton:String, _NoButton:String){
+        this._title = _title
+        this._text = _text
+        this._OkButton = _OkButton
+        this._NoButton = _NoButton
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,20 +57,22 @@ class PopUpWindow : AppCompatActivity() {
 
         // Get the data
         val bundle = intent.extras
-        popupTitle = bundle?.getString("popuptitle", "Title") ?: ""
-        popupText = bundle?.getString("popuptext", "Text") ?: ""
-        popupButton = bundle?.getString("popupbtn", "Button") ?: ""
+        popupTitle = bundle?.getString("popuptitle", _title) ?: ""
+        popupText = bundle?.getString("popuptext", _text) ?: ""
+        popupOkButton = bundle?.getString("popupbtn", _OkButton) ?: ""
+        popupNoButton = bundle?.getString("popupbtn", _NoButton) ?: ""
         darkStatusBar = bundle?.getBoolean("darkstatusbar", false) ?: false
         //amount = bundle?.getInt("amount", 0) ?: 0
         val intent = Intent(this, NewExamActivity::class.java)
-        intent.putExtra("amount", txtAmount.text.toString())
+//        intent.putExtra("amount", txtAmount.text.toString())
         startActivity(intent);
 
         // Set the data
 
-        //title.text = popupTitle
+        title.text = popupTitle
         text.text = popupText
-        button.text = popupButton
+        OkButton.text = popupOkButton
+        NoButton.text = popupNoButton
         //txtAmount.text = amount.toString()
 
         // Set the Status bar appearance for different API levels
@@ -91,7 +108,12 @@ class PopUpWindow : AppCompatActivity() {
 
 
         // Close the Popup Window when you press the button
-        button.setOnClickListener {
+        OkButton.setOnClickListener {
+            buttonPressed = "ok"
+            onBackPressed()
+        }
+        NoButton.setOnClickListener {
+            buttonPressed = "no"
             onBackPressed()
         }
     }

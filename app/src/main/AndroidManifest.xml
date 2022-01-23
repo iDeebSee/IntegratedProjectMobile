@@ -15,6 +15,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.IntegratedProjectMobile">
         <activity
+            android:name=".student.StudentUpdateActivity"
+            android:exported="true" />
+        <activity
+            android:name=".student.StudentDashboardActivity"
+            android:exported="true" />
+        <activity
             android:name=".admin.AdminCSV"
             android:exported="false" />
         <activity

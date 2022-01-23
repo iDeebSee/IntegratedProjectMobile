@@ -28,7 +28,7 @@ class StudentLoginActivity : AppCompatActivity() {
                     Log.d(ContentValues.TAG, "${document.id} => ${document.data["student"]}")
                     if (spinnerStudents != null) {
                         studentAdapter.add(document.data["student"].toString());//.values.toString()
-                        student = document.data["student"].toString()
+                        //student = document.data["student"].toString()
                         spinnerStudents.adapter = studentAdapter;
                     }
                 }
@@ -37,8 +37,9 @@ class StudentLoginActivity : AppCompatActivity() {
                 Log.w(ContentValues.TAG, "Error getting documents.", exception)
             }
         btnLogin.setOnClickListener {
+            var uid = spinnerStudents.selectedItem.toString()
             val intent = Intent(this, StudentsActivity::class.java)
-            intent.putExtra("snummer", student)
+            intent.putExtra("snummer", uid)
             startActivity(intent)
         }
 

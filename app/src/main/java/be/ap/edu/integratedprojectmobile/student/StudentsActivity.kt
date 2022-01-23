@@ -6,6 +6,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.location.LocationManager
 import android.provider.Settings
 import android.location.Location
@@ -22,12 +24,16 @@ class StudentsActivity : AppCompatActivity() {
 
     var getLon: String = ""
     var getLat: String = ""
+    val db = Firebase.firestore
+    var examsDone:List<String> = ArrayList<String>()
+    var tempList = ArrayList<String>()
+    var studentExam: HashMap<String, String> = HashMap<String, String>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_students)
         val layout = findViewById<LinearLayout>(R.id.LinearLayoutSA)
-        val db = Firebase.firestore
+
         //val uid = intent.getStringExtra("snummer")
 
         getLocation()
@@ -47,7 +53,7 @@ class StudentsActivity : AppCompatActivity() {
     }
 
     fun createNewTextView(text:String): TextView {
-        val uid = intent.getStringExtra("snummer")
+        val uid = intent.getStringExtra("snummer").toString()
         val lparams = LinearLayout.LayoutParams(
             LinearLayout.LayoutParams.WRAP_CONTENT,
             LinearLayout.LayoutParams.WRAP_CONTENT,
@@ -58,15 +64,46 @@ class StudentsActivity : AppCompatActivity() {
         txt.text = text
         txt.layoutParams = lparams
         Log.d("id", txt.id.toString())
-        txt.setOnClickListener{
-            val intent = Intent(this, StudentExamActivity::class.java)
-            intent.putExtra("examName",txt.text.toString())
-            intent.putExtra("snummer",uid)
-            intent.putExtra("lon",getLon)
-            intent.putExtra("lat",getLat)
-            startActivity(intent)
-            Log.d("child", txt.text.toString())
+
+        db.collection("studentanswers").get().addOnSuccessListener { result ->
+            for (document in result) {
+                var tempData = document.id.split("-")
+                studentExam.set(tempData[1], tempData[0])
+                Log.d("de student answers na split", tempData.toString())
+            }
+            Log.d("hashmap", studentExam.toString())
+
+
+            if (studentExam.containsKey(uid)){
+                if (txt.text.toString() != studentExam.getValue(uid).toString() ) {
+                    txt.setTextColor(Color.BLUE)
+                    txt.setOnClickListener {
+                        val intent = Intent(this, StudentExamActivity::class.java)
+                        intent.putExtra("examName", txt.text.toString())
+                        intent.putExtra("snummer", uid)
+                        intent.putExtra("lon", getLon)
+                        intent.putExtra("lat", getLat)
+                        startActivity(intent)
+                        Log.d("child", txt.text.toString())
+                    }
+                }
+            }else if (!studentExam.containsKey(uid)){
+                txt.setTextColor(Color.BLUE)
+                txt.setOnClickListener {
+                    val intent = Intent(this, StudentExamActivity::class.java)
+                    intent.putExtra("examName", txt.text.toString())
+                    intent.putExtra("snummer", uid)
+                    intent.putExtra("lon", getLon)
+                    intent.putExtra("lat", getLat)
+                    startActivity(intent)
+                    Log.d("child", txt.text.toString())
+                }
+            }
+            else {
+                txt.setTextColor(Color.GRAY)
+            }
         }
+
         return  txt
     }
 
@@ -74,7 +111,7 @@ class StudentsActivity : AppCompatActivity() {
     var locationGps: Location? = null
 
     fun getLocation() {
-        val uid = intent.getStringExtra("snummer")
+        val uid = intent.getStringExtra("snummer").toString()
         if (ActivityCompat.checkSelfPermission(
                 this,
                 android.Manifest.permission.ACCESS_COARSE_LOCATION
@@ -122,16 +159,19 @@ class StudentsActivity : AppCompatActivity() {
                             "student" to uid
                         )
 
-                        Firebase.firestore.collection("students")
-                            .add(student)
-                            .addOnSuccessListener { documentReference ->
+                        //db.document(uid).update(student as Map<String, Any>)
+
+//                        Firebase.firestore.collection("students")
+//                            .add(student)
+                        db.collection("students").document(uid).update(student as Map<String, Any>)
+                            .addOnSuccessListener {
                                 Log.d(
                                     TAG,
-                                    "DocumentSnapshot added with ID: ${documentReference.id}"
+                                    "Document updated"
                                 )
                             }
                             .addOnFailureListener { e ->
-                                Log.w(TAG, "Error adding document", e)
+                                Log.w(TAG, "Error updating document", e)
                             }
                     }
                 }
@@ -164,16 +204,17 @@ class StudentsActivity : AppCompatActivity() {
                             "student" to uid
                         )
 
-                        Firebase.firestore.collection("students")
-                            .add(student)
-                            .addOnSuccessListener { documentReference ->
+                        //Firebase.firestore.collection("students")
+                            //.add(student)
+                        db.collection("students").document(uid).update(student as Map<String, Any>)
+                            .addOnSuccessListener {
                                 Log.d(
                                     TAG,
-                                    "DocumentSnapshot added with ID: ${documentReference.id}"
+                                    "Document updated"
                                 )
                             }
                             .addOnFailureListener { e ->
-                                Log.w(TAG, "Error adding document", e)
+                                Log.w(TAG, "Error updating document", e)
                             }
                     }
             }

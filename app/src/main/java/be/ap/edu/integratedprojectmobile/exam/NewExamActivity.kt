@@ -15,6 +15,7 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import android.widget.RadioButton
 import be.ap.edu.integratedprojectmobile.R
+import be.ap.edu.integratedprojectmobile.database.FirebaseDatabaseHelper
 
 
 class NewExamActivity : AppCompatActivity() {
@@ -43,6 +44,7 @@ class NewExamActivity : AppCompatActivity() {
 
 
         var questionsList: MutableList<String> = ArrayList()
+
 
         fun addTitle(text:String):TextView{
             val lparams = LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, 1.0f)
@@ -121,7 +123,6 @@ class NewExamActivity : AppCompatActivity() {
 
             return radioButtonArray
         }
-
 
 
         fun radioButtonGroup(title:TextView, radioButtons: ArrayList<RadioButton>): RadioGroup {

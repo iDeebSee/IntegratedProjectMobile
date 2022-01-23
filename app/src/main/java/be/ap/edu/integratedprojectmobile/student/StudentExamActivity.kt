@@ -1,12 +1,14 @@
 package be.ap.edu.integratedprojectmobile.student
 
 import android.content.ContentValues
+import android.content.Intent
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.inputmethod.EditorInfo
 import android.widget.*
+import be.ap.edu.integratedprojectmobile.PopUpWindow
 import be.ap.edu.integratedprojectmobile.R
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -22,7 +24,7 @@ class StudentExamActivity : AppCompatActivity() {
         val lon = intent.getStringExtra("lon")
         val lat = intent.getStringExtra("lat")
 
-
+        //val popupWindow:PopUpWindow = PopUpWindow()
 
         val db = Firebase.firestore
         val txtExamTitle = findViewById<TextView>(R.id.tvStudentExamTitle)
@@ -54,7 +56,6 @@ class StudentExamActivity : AppCompatActivity() {
         }
 
 
-        var textViewTeller = 0
         fun createNewTextView(text:String): TextView {
             val lparams = LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.WRAP_CONTENT,
@@ -223,12 +224,14 @@ class StudentExamActivity : AppCompatActivity() {
             }
 
             val examAnswers = hashMapOf(
+                "exam" to examName,
+                "student" to uid,
+                "lat" to lat,
+                "lon" to lon,
                 "openQuestionsAnswers" to openVragenAntwoord.toString().split(",", "[", "]").filter{ x:String? -> x != "" },
                 "mcQuestionsAnswers" to mcVragenAntwoord.toString().split(",", "[", "]").filter{ x:String? -> x != "" },
-                "codeQuestionsAnswers" to codeVragenAntwoord.toString().split(",", "[", "]").filter{ x:String? -> x != "" },
-                "lon" to lon,
-                "lat" to lat,
-                "student" to uid
+                "codeQuestionsAnswers" to codeVragenAntwoord.toString().split(",", "[", "]").filter{ x:String? -> x != "" }
+
             )
             db.collection("studentanswers")
                 .document(txtExamTitle.text.toString()+"-"+uid)
@@ -240,6 +243,11 @@ class StudentExamActivity : AppCompatActivity() {
                 .addOnFailureListener { e ->
                     Log.w(ContentValues.TAG, "Error adding document", e)
                 }
+
+            val intent  = Intent(this, StudentsActivity::class.java)
+            intent.putExtra("examName", examName.toString())
+            startActivity(intent)
+//                popupWindow.fillIn("Indienen", "Bent u er zeker van dat u wilt indiene?", "ja", "nee")
 
         }
     }

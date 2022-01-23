@@ -47,8 +47,8 @@
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/popup_window_text"
-                    android:layout_width="236dp"
-                    android:layout_height="27dp"
+                    android:layout_width="234dp"
+                    android:layout_height="69dp"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="8dp"
@@ -59,7 +59,7 @@
                     android:textColor="#FFFFFF"
                     android:textSize="12sp"
                     android:textStyle="bold"
-                    app:layout_constraintBottom_toTopOf="@+id/popup_window_button"
+                    app:layout_constraintBottom_toTopOf="@+id/popup_window_button_no"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
@@ -84,30 +84,40 @@
 
 
                 <Button
-                    android:id="@+id/popup_window_button"
+                    android:id="@+id/popup_window_button_no"
                     style="?android:attr/borderlessButtonStyle"
-                    android:layout_width="match_parent"
-                    android:layout_height="48dp"
+                    android:layout_width="100dp"
+                    android:layout_height="46dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="4dp"
+                    android:background="#851635"
+                    android:text="Cancel"
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    android:textSize="20sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/popup_window_button_ok"
+                    app:layout_constraintTop_toBottomOf="@+id/popup_window_text" />
+
+                <Button
+                    android:id="@+id/popup_window_button_ok"
+                    style="?android:attr/borderlessButtonStyle"
+                    android:layout_width="100dp"
+                    android:layout_height="46dp"
+                    android:layout_marginTop="13dp"
+                    android:layout_marginBottom="4dp"
                     android:background="#851635"
                     android:text="ok"
                     android:textAllCaps="false"
                     android:textColor="#FFFFFF"
                     android:textSize="20sp"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent" />
-
-                <EditText
-                    android:id="@+id/txtAmount"
-                    android:layout_width="207dp"
-                    android:layout_height="48dp"
-                    android:ems="10"
-                    android:inputType="textPersonName"
-                    android:text="0"
-                    app:layout_constraintBottom_toTopOf="@+id/popup_window_button"
-                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/popup_window_button_no"
+                    app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/popup_window_text" />
+                    app:layout_constraintTop_toBottomOf="@+id/popup_window_text"
+                    app:layout_constraintVertical_bias="1.0" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
