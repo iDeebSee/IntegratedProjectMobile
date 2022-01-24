@@ -1,46 +1,46 @@
 package be.ap.edu.integratedprojectmobile.student
 
 import android.content.ContentValues
-import android.content.Intent
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.inputmethod.EditorInfo
 import android.widget.*
-import be.ap.edu.integratedprojectmobile.PopUpWindow
 import be.ap.edu.integratedprojectmobile.R
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
-class StudentExamActivity : AppCompatActivity() {
-
+class StudentViewExamActivity : AppCompatActivity() {
+    lateinit var mcQuestionAswers:Array<String>
+    lateinit var openQuestionAswers:Array<String>
+    lateinit var codeQuestionAswers:Array<String>
     override fun onCreate(savedInstanceState: Bundle?) {
-
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_student_exam)
-
-        val uid = intent.getStringExtra("snummer")
-        val lon = intent.getStringExtra("lon")
-        val lat = intent.getStringExtra("lat")
-
-        //val popupWindow:PopUpWindow = PopUpWindow()
+        setContentView(R.layout.activity_student_view_exam)
 
         val db = Firebase.firestore
-        val txtExamTitle = findViewById<TextView>(R.id.tvStudentExamTitle)
-        val examName=intent.getStringExtra("examName")
-        val layout = findViewById<LinearLayout>(R.id.LinearLayoutOefningen)
-        txtExamTitle.text = examName.toString()
-        val btnSubmit = findViewById<Button>(R.id.btnStudentExamSubmit)
-        val openVragenAntwoord : ArrayList<String> = ArrayList()
-        val mcVragenAntwoord : ArrayList<String> = ArrayList()
-        val codeVragenAntwoord : ArrayList<String> = ArrayList()
-        val openVragenVeld : ArrayList<TextView> = ArrayList()
-        val mcVragenVeld : ArrayList<RadioButton> = ArrayList()
-        val codeVragenVeld : ArrayList<TextView> = ArrayList()
 
 
-        fun addTitle(text:String):TextView{
+        val layout = findViewById<LinearLayout>(R.id.llstudentViewExam)
+        val exam = intent.getStringExtra("exam").toString()
+        val student = intent.getStringExtra("student").toString()
+
+
+        db.collection("studentanswers").document("${exam}-${student}")
+            .get()
+            .addOnSuccessListener{ result ->
+
+                mcQuestionAswers =
+                    result.data?.get("mcQuestionsAnswers").toString().split(",","[", "]").filter{ x:String? -> x != "" }.toTypedArray()
+                openQuestionAswers =
+                    result.data?.get("openQuestionsAnswers").toString().split(",","[", "]").filter{ x:String? -> x != "" }.toTypedArray()
+                codeQuestionAswers =
+                    result.data?.get("codeQuestionsAnswers").toString().split(",","[", "]").filter{ x:String? -> x != "" }.toTypedArray()
+
+            }
+
+        fun addTitle(text:String): TextView {
             val lparams = LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.WRAP_CONTENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT,
@@ -55,8 +55,9 @@ class StudentExamActivity : AppCompatActivity() {
             return txt
         }
 
+        var tellerForOpenQuestions = 0
+        fun createNewTextView(text:String):TextView {
 
-        fun createNewTextView(text:String): TextView {
             val lparams = LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.WRAP_CONTENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT,
@@ -68,12 +69,13 @@ class StudentExamActivity : AppCompatActivity() {
             txt.imeOptions = EditorInfo.IME_FLAG_NO_ENTER_ACTION
             txt.isSingleLine = false
             txt.layoutParams = lparams
-            txt.hint = text
-            Log.d("on click listener", openVragenAntwoord.toString())
-            openVragenVeld.add(txt)
+            for (i in 0 .. tellerForOpenQuestions){
+                txt.hint = openQuestionAswers[i]
+            }
+            txt.isEnabled = false
+            tellerForOpenQuestions++
             return  txt
         }
-
 
         fun createCodeVraag(text:String){
             val lparams = LinearLayout.LayoutParams(
@@ -96,17 +98,18 @@ class StudentExamActivity : AppCompatActivity() {
                 finishedText += "$item ($teller)____ "
             }
             txt.text = finishedText
+            txt.isEnabled = false
             layout.addView(txt)
 
             for(i in 1 .. teller){
                 val view = layoutInflater.inflate(R.layout.code_vraag_layout, null)
                 val etAnswer = view.findViewById<EditText>(R.id.etAnswer)
-                etAnswer.hint = i.toString()
+                etAnswer.hint = codeQuestionAswers[i-1]
+                etAnswer.isEnabled = false
+                //if (codeQuestionAswers.contains())
                 layout.addView(view)
-                codeVragenVeld.add(etAnswer)
             }
         }
-
 
         fun radioButton(text: Array<String>): ArrayList<RadioButton> {
             val radioButtonArray: ArrayList<RadioButton> = ArrayList()
@@ -117,8 +120,12 @@ class StudentExamActivity : AppCompatActivity() {
                     LinearLayout.LayoutParams.WRAP_CONTENT
                 )
                 rdbNewRadioButton.text = rdb
+                if (mcQuestionAswers.contains(rdbNewRadioButton.text)){
+                    rdbNewRadioButton.isChecked = true
+
+                }
+                rdbNewRadioButton.isEnabled = false
                 radioButtonArray.add(rdbNewRadioButton)
-                mcVragenVeld.add(rdbNewRadioButton)
                 Log.d("radiobutton", rdbNewRadioButton.text.toString())
             }
 
@@ -145,20 +152,24 @@ class StudentExamActivity : AppCompatActivity() {
 
         }
 
-        db.collection("exams").document(examName.toString())
+
+
+        db.collection("exams").document(exam)
             .get()
             .addOnSuccessListener { result ->
                 val codeQuestions: ArrayList<String> = ArrayList()
                 val mcQuestions: ArrayList<String> = ArrayList()
                 val oQuestions: ArrayList<String> = ArrayList()
-                Log.d("radioGroupAmount",result.data?.get("radioGroupAmount").toString())
                 val amount: Any? = result.data?.get("radioGroupAmount")//.toString().split(",").toString()
                 val theArray = amount.toString().split(",", "[", "]", " ").toTypedArray()
                 Log.d("amount", amount.toString())
                 var theAmount: String = ""
                 val mySize = theArray.size
-                val resultaat = result.data?.get("multipleChoice").toString().split(",","[", "]").filter{ x:String? -> x != "" }.toTypedArray()
+                Log.d("theArray size", mySize.toString())
+                val mcResultaat = result.data?.get("multipleChoice").toString().split(",","[", "]").filter{ x:String? -> x != "" }.toTypedArray()
+                val resultaat = result.data?.get("radioGroup").toString().split(",","[", "]").filter{ x:String? -> x != "" }.toTypedArray()
                 val titles = result.data?.get("mcTitles").toString().split(",", "[", "]").filter { x:String? -> x != "" }.toTypedArray()
+                Log.d("titles size", titles.size.toString())
                 var title:String = ""
                 //var teller = 0
                 for (i in 0 until titles.size){
@@ -170,14 +181,13 @@ class StudentExamActivity : AppCompatActivity() {
                         theAmount = theArray[item]
                         Log.d("the amount $item: ", theAmount)
                         for (i in 0 until theAmount.toInt()){
-                            Log.d("$i", theAmount)
-                            mcQuestions.add(resultaat[i])
+
+                            mcQuestions.add(mcResultaat[i])
                         }
                         layout.addView(radioButtonGroup(addTitle(title),radioButton(mcQuestions.toTypedArray())))
+
                     }
-
                     mcQuestions.clear()
-
                 }
 
                 val openQuestions = result.data?.get("openQuestions")?.toString()
@@ -203,54 +213,5 @@ class StudentExamActivity : AppCompatActivity() {
             }
 
 
-        btnSubmit.setOnClickListener {
-            for(item:TextView in openVragenVeld){
-
-                openVragenAntwoord.add(item.text.toString())
-                Log.d("btn save openQ text", item.text.toString())
-            }
-
-            for(item:RadioButton in mcVragenVeld){
-                if (item.isChecked()){
-                    mcVragenAntwoord.add(item.text.toString())
-                }else{
-                    item.isChecked = false
-                }
-
-            }
-            for (item:TextView in codeVragenVeld){
-                codeVragenAntwoord.add(item.text.toString())
-                Log.d("code questions",item.text.toString())
-            }
-
-            val examAnswers = hashMapOf(
-                "exam" to examName,
-                "student" to uid,
-                "lat" to lat,
-                "lon" to lon,
-                "openQuestionsAnswers" to openVragenAntwoord.toString().split(",", "[", "]").filter{ x:String? -> x != "" },
-                "mcQuestionsAnswers" to mcVragenAntwoord.toString().split(",", "[", "]").filter{ x:String? -> x != "" },
-                "codeQuestionsAnswers" to codeVragenAntwoord.toString().split(",", "[", "]").filter{ x:String? -> x != "" }
-
-            )
-
-            db.collection("studentanswers")
-                .document(txtExamTitle.text.toString()+"-"+uid)
-                .set(examAnswers)
-                .addOnSuccessListener { documentReference ->
-                    Log.d(ContentValues.TAG, "DocumentSnapshot added with ID: ${documentReference}")
-                    Toast.makeText(applicationContext, "Examen is opgeslagen!", Toast.LENGTH_LONG).show()
-                }
-                .addOnFailureListener { e ->
-                    Log.w(ContentValues.TAG, "Error adding document", e)
-                }
-
-            val intent  = Intent(this, StudentsActivity::class.java)
-            intent.putExtra("examName", examName.toString())
-            startActivity(intent)
-//                popupWindow.fillIn("Indienen", "Bent u er zeker van dat u wilt indiene?", "ja", "nee")
-
-        }
     }
-
 }

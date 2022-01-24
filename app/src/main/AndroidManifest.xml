@@ -15,10 +15,19 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.IntegratedProjectMobile">
         <activity
+            android:name=".student.StudentViewExamActivity"
+            android:exported="true" />
+        <activity
+            android:name=".student.StudentGeoActivity"
+            android:exported="true" />
+        <activity
+            android:name=".PopUpWindow"
+            android:exported="true" />
+        <activity
             android:name=".student.StudentUpdateActivity"
             android:exported="true" />
         <activity
-            android:name=".student.StudentDashboardActivity"
+            android:name=".admin.AdminStudentActivity"
             android:exported="true" />
         <activity
             android:name=".admin.AdminCSV"

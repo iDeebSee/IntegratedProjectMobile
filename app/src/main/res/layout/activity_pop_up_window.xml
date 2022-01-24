@@ -11,8 +11,8 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/popup_window_view_with_border"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="518dp"
+        android:layout_height="419dp"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         app:cardBackgroundColor="#FFFFFF"
@@ -27,8 +27,8 @@
 
         <androidx.cardview.widget.CardView
             android:id="@+id/popup_window_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_centerInParent="true"
             android:layout_margin="2dp"
             app:cardBackgroundColor="@android:color/white"
@@ -39,16 +39,16 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/popup_window_background_container"
-                android:layout_width="250dp"
-                android:minHeight="170dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
                 android:background="#bc214b"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true">
+                android:minHeight="170dp">
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/popup_window_text"
-                    android:layout_width="234dp"
-                    android:layout_height="69dp"
+                    android:layout_width="449dp"
+                    android:layout_height="262dp"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="8dp"
@@ -61,10 +61,10 @@
                     android:textStyle="bold"
                     app:layout_constraintBottom_toTopOf="@+id/popup_window_button_no"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintHorizontal_bias="0.51"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/popup_window_title"
-                    app:layout_constraintVertical_bias="0.0" />
+                    app:layout_constraintVertical_bias="0.435" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/popup_window_title"
@@ -88,8 +88,10 @@
                     style="?android:attr/borderlessButtonStyle"
                     android:layout_width="100dp"
                     android:layout_height="46dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginBottom="4dp"
+                    android:layout_marginStart="81dp"
+                    android:layout_marginTop="29dp"
+                    android:layout_marginEnd="124dp"
+                    android:layout_marginBottom="32dp"
                     android:background="#851635"
                     android:text="Cancel"
                     android:textAllCaps="false"
@@ -105,8 +107,10 @@
                     style="?android:attr/borderlessButtonStyle"
                     android:layout_width="100dp"
                     android:layout_height="46dp"
-                    android:layout_marginTop="13dp"
-                    android:layout_marginBottom="4dp"
+                    android:layout_marginStart="109dp"
+                    android:layout_marginTop="26dp"
+                    android:layout_marginEnd="35dp"
+                    android:layout_marginBottom="16dp"
                     android:background="#851635"
                     android:text="ok"
                     android:textAllCaps="false"
@@ -114,10 +118,10 @@
                     android:textSize="20sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/popup_window_button_no"
-                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintHorizontal_bias="0.285"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/popup_window_text"
-                    app:layout_constraintVertical_bias="1.0" />
+                    app:layout_constraintVertical_bias="0.478" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

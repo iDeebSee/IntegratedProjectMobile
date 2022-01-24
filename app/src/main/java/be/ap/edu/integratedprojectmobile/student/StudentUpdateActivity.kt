@@ -7,6 +7,7 @@ import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import be.ap.edu.integratedprojectmobile.R
+import be.ap.edu.integratedprojectmobile.admin.AdminStudentActivity
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
@@ -23,9 +24,6 @@ class StudentUpdateActivity : AppCompatActivity() {
         txtStudent.text = student
 
 
-
-
-
         btnUpdate.setOnClickListener {
             val studentData = hashMapOf(
                 "latitude" to "",
@@ -35,7 +33,7 @@ class StudentUpdateActivity : AppCompatActivity() {
             db.collection("students").document(student).delete()
             db.collection("students").document(txtStudent.text.toString()).set(studentData)
             Toast.makeText(this, "student has been updated", Toast.LENGTH_LONG).show()
-            val intent = Intent(this, StudentDashboardActivity::class.java)
+            val intent = Intent(this, AdminStudentActivity::class.java)
 //            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
 //            finish();
             startActivity(intent)

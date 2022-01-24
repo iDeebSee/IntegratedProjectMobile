@@ -62,6 +62,7 @@ class StudentsActivity : AppCompatActivity() {
         lparams.setMargins(0, 0, 0, 15)
         val txt = TextView(this)
         txt.text = text
+        txt.textSize = 20f
         txt.layoutParams = lparams
         Log.d("id", txt.id.toString())
 
