@@ -10,8 +10,6 @@ import android.view.View
 import android.widget.*
 import be.ap.edu.integratedprojectmobile.exam.ExamsActivity
 import be.ap.edu.integratedprojectmobile.R
-import be.ap.edu.integratedprojectmobile.student.StudentGeoActivity
-import be.ap.edu.integratedprojectmobile.student.StudentViewExamActivity
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
@@ -71,7 +69,7 @@ class AdminDashboardActivity : AppCompatActivity() {
             btn.text = buttonType.name
             if (buttonType == ButtonType.GEO){
                 btn.setOnClickListener {
-                    val intent = Intent(this, StudentGeoActivity::class.java)
+                    val intent = Intent(this, AdminStudentGeoActivity::class.java)
                     intent.putExtra("lon", lon)
                     intent.putExtra("lat", lat)
                     startActivity(intent)
@@ -79,7 +77,7 @@ class AdminDashboardActivity : AppCompatActivity() {
             }
             else if (buttonType == AdminDashboardActivity.ButtonType.VIEW){
                 btn.setOnClickListener {
-                    val intent = Intent(this, StudentViewExamActivity::class.java)
+                    val intent = Intent(this, AdminStudentViewExamActivity::class.java)
                     intent.putExtra("student", student)
                     intent.putExtra("exam", exam)
                     startActivity(intent)

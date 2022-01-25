@@ -7,10 +7,6 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.*
 import be.ap.edu.integratedprojectmobile.R
-import be.ap.edu.integratedprojectmobile.admin.AdminDashboardActivity
-import be.ap.edu.integratedprojectmobile.admin.AdminStudentActivity
-import be.ap.edu.integratedprojectmobile.student.StudentGeoActivity
-import be.ap.edu.integratedprojectmobile.student.StudentViewExamActivity
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 

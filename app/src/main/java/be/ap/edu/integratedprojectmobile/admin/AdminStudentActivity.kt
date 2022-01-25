@@ -11,7 +11,6 @@ import be.ap.edu.integratedprojectmobile.R
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import android.widget.LinearLayout.LayoutParams
-import be.ap.edu.integratedprojectmobile.student.StudentUpdateActivity
 
 class AdminStudentActivity : AppCompatActivity() {
 
@@ -65,7 +64,7 @@ class AdminStudentActivity : AppCompatActivity() {
             }
             else if (buttonType == ButtonType.UPDATE){
                 btn.setOnClickListener {
-                    val intent = Intent(this, StudentUpdateActivity::class.java)
+                    val intent = Intent(this, AdminStudentUpdateActivity::class.java)
                     intent.putExtra("student", student)
                     startActivity(intent)
                 }

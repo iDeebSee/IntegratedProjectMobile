@@ -12,8 +12,10 @@ import android.location.LocationManager
 import android.provider.Settings
 import android.location.Location
 import android.util.Log
+import android.view.KeyEvent
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import be.ap.edu.integratedprojectmobile.R
 import com.google.firebase.firestore.ktx.firestore
@@ -22,28 +24,62 @@ import com.google.firebase.ktx.Firebase
 
 class StudentsActivity : AppCompatActivity() {
 
+    override fun onBackPressed() {
+        Toast.makeText(
+            applicationContext,
+            "You Are Not Allowed to Exit the App",
+            Toast.LENGTH_SHORT
+        ).show()
+    }
+
+    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+        if (keyCode == KeyEvent.KEYCODE_HOME) {
+            Log.i(
+                "TEST",
+                "Home Button"
+            ) // here you'll have to do something to prevent the button to go to the home screen
+            val intent = Intent(this, StudentsActivity::class.java)
+            startActivity(intent)
+            return true
+        }
+        return super.onKeyDown(keyCode, event)
+    }
+
+//    val uid = intent.getStringExtra("snummer").toString()
     var getLon: String = ""
     var getLat: String = ""
     val db = Firebase.firestore
     var examsDone:List<String> = ArrayList<String>()
     var tempList = ArrayList<String>()
-    var studentExam: HashMap<String, String> = HashMap<String, String>()
+    private val studentExam = mutableMapOf<String, String>()
+    private val studentExamSecond = ArrayList<String>()
+    private val studentExamAnswers = ArrayList<String>()
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_students)
         val layout = findViewById<LinearLayout>(R.id.LinearLayoutSA)
+        val uid = intent.getStringExtra("snummer").toString()
 
-        //val uid = intent.getStringExtra("snummer")
 
         getLocation()
+        db.collection("studentanswers").get().addOnSuccessListener { result ->
+            for (documt in result){
+                if (documt.get("student") == uid){
+                    studentExamAnswers.add(documt.get("exam").toString())
+                }
+            }
+        }
 
         db.collection("exams")
             .get()
             .addOnSuccessListener { result ->
                 for (document in result) {
-                    layout.addView(createNewTextView(document.data["name"].toString()))
-
+                    if (!(studentExamAnswers.contains(document.data["name"].toString()))){
+                        layout.addView(createNewTextView(document.data["name"].toString()))
+                    }
                     Log.d(TAG, "${document.id} => ${document.data}")
                 }
             }
@@ -52,7 +88,12 @@ class StudentsActivity : AppCompatActivity() {
             }
     }
 
+
+
     fun createNewTextView(text:String): TextView {
+
+
+        val exam:String = ""
         val uid = intent.getStringExtra("snummer").toString()
         val lparams = LinearLayout.LayoutParams(
             LinearLayout.LayoutParams.WRAP_CONTENT,
@@ -64,20 +105,10 @@ class StudentsActivity : AppCompatActivity() {
         txt.text = text
         txt.textSize = 20f
         txt.layoutParams = lparams
+        txt.setTextColor(Color.RED)
+
         Log.d("id", txt.id.toString())
 
-        db.collection("studentanswers").get().addOnSuccessListener { result ->
-            for (document in result) {
-                var tempData = document.id.split("-")
-                studentExam.set(tempData[1], tempData[0])
-                Log.d("de student answers na split", tempData.toString())
-            }
-            Log.d("hashmap", studentExam.toString())
-
-
-            if (studentExam.containsKey(uid)){
-                if (txt.text.toString() != studentExam.getValue(uid).toString() ) {
-                    txt.setTextColor(Color.BLUE)
                     txt.setOnClickListener {
                         val intent = Intent(this, StudentExamActivity::class.java)
                         intent.putExtra("examName", txt.text.toString())
@@ -87,23 +118,6 @@ class StudentsActivity : AppCompatActivity() {
                         startActivity(intent)
                         Log.d("child", txt.text.toString())
                     }
-                }
-            }else if (!studentExam.containsKey(uid)){
-                txt.setTextColor(Color.BLUE)
-                txt.setOnClickListener {
-                    val intent = Intent(this, StudentExamActivity::class.java)
-                    intent.putExtra("examName", txt.text.toString())
-                    intent.putExtra("snummer", uid)
-                    intent.putExtra("lon", getLon)
-                    intent.putExtra("lat", getLat)
-                    startActivity(intent)
-                    Log.d("child", txt.text.toString())
-                }
-            }
-            else {
-                txt.setTextColor(Color.GRAY)
-            }
-        }
 
         return  txt
     }
