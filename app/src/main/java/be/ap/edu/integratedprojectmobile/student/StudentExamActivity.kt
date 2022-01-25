@@ -6,19 +6,51 @@ import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.KeyEvent
 import android.view.inputmethod.EditorInfo
 import android.widget.*
 import be.ap.edu.integratedprojectmobile.PopUpWindow
 import be.ap.edu.integratedprojectmobile.R
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import android.widget.Toast
+import android.view.WindowManager
+
+
+
+
+
+
 
 class StudentExamActivity : AppCompatActivity() {
+
+    override fun onBackPressed() {
+        Toast.makeText(
+            applicationContext,
+            "You Are Not Allowed to Exit the App",
+            Toast.LENGTH_SHORT
+        ).show()
+    }
+
+    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+        if (keyCode == KeyEvent.KEYCODE_HOME || keyCode == KeyEvent.KEYCODE_ALL_APPS) {
+            Log.i(
+                "TEST",
+                "Home Button"
+            ) // here you'll have to do something to prevent the button to go to the home screen
+            val intent = Intent(this, StudentExamActivity::class.java)
+            startActivity(intent)
+            return true
+        }
+        return super.onKeyDown(keyCode, event)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_student_exam)
+
+
 
         val uid = intent.getStringExtra("snummer")
         val lon = intent.getStringExtra("lon")
@@ -245,12 +277,14 @@ class StudentExamActivity : AppCompatActivity() {
                     Log.w(ContentValues.TAG, "Error adding document", e)
                 }
 
-            val intent  = Intent(this, StudentsActivity::class.java)
-            intent.putExtra("examName", examName.toString())
+            val intent  = Intent(this, StudentLoginActivity::class.java)
+            //intent.putExtra("examName", examName.toString())
             startActivity(intent)
 //                popupWindow.fillIn("Indienen", "Bent u er zeker van dat u wilt indiene?", "ja", "nee")
 
         }
+
+
     }
 
 }

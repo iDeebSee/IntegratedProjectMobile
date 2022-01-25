@@ -5,14 +5,38 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.KeyEvent
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.Spinner
+import android.widget.Toast
 import be.ap.edu.integratedprojectmobile.R
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
 class StudentLoginActivity : AppCompatActivity() {
+
+    override fun onBackPressed() {
+        Toast.makeText(
+            applicationContext,
+            "You Are Not Allowed to Exit the App",
+            Toast.LENGTH_SHORT
+        ).show()
+    }
+
+    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+        if (keyCode == KeyEvent.KEYCODE_HOME) {
+            Log.i(
+                "TEST",
+                "Home Button"
+            ) // here you'll have to do something to prevent the button to go to the home screen
+            val intent = Intent(this, StudentLoginActivity::class.java)
+            startActivity(intent)
+            return true
+        }
+        return super.onKeyDown(keyCode, event)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_student_login)

@@ -1,4 +1,4 @@
-package be.ap.edu.integratedprojectmobile.student
+package be.ap.edu.integratedprojectmobile.admin
 
 import android.content.ContentValues
 import android.graphics.Color
@@ -11,16 +11,25 @@ import be.ap.edu.integratedprojectmobile.R
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
-class StudentViewExamActivity : AppCompatActivity() {
-    lateinit var mcQuestionAswers:Array<String>
-    lateinit var openQuestionAswers:Array<String>
-    lateinit var codeQuestionAswers:Array<String>
+class AdminStudentViewExamActivity : AppCompatActivity() {
+    var mcQuestionAswers:ArrayList<String> = ArrayList()
+    var openQuestionAswers:ArrayList<String> = ArrayList()
+    var codeQuestionAswers:ArrayList<String> = ArrayList()
+    var mcQuestionSolution:ArrayList<String> = ArrayList()
+    var openQuestionSolution:ArrayList<String> = ArrayList()
+    var codeQuestionSolution:ArrayList<String> = ArrayList()
+    var punten:Double = 0.0
+    var puntenTotaal:Int = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_student_view_exam)
 
         val db = Firebase.firestore
 
+        val txtPunten = findViewById<TextView>(R.id.txtPunten)
+        txtPunten.text = punten.toString()
+        val txtPuntenTotaal= findViewById<TextView>(R.id.txtTotaalPunten)
+        txtPuntenTotaal.text = "/" +puntenTotaal.toString()
 
         val layout = findViewById<LinearLayout>(R.id.llstudentViewExam)
         val exam = intent.getStringExtra("exam").toString()
@@ -32,11 +41,25 @@ class StudentViewExamActivity : AppCompatActivity() {
             .addOnSuccessListener{ result ->
 
                 mcQuestionAswers =
-                    result.data?.get("mcQuestionsAnswers").toString().split(",","[", "]").filter{ x:String? -> x != "" }.toTypedArray()
+                    result.data?.get("mcQuestionsAnswers").toString().split(",","[", "]").filter{ x:String? -> x != "" }.toMutableList() as ArrayList<String>
                 openQuestionAswers =
-                    result.data?.get("openQuestionsAnswers").toString().split(",","[", "]").filter{ x:String? -> x != "" }.toTypedArray()
+                    result.data?.get("openQuestionsAnswers").toString().split(",","[", "]").filter{ x:String? -> x != "" }.toMutableList() as ArrayList<String>
                 codeQuestionAswers =
-                    result.data?.get("codeQuestionsAnswers").toString().split(",","[", "]").filter{ x:String? -> x != "" }.toTypedArray()
+                    result.data?.get("codeQuestionsAnswers").toString().split(",","[", "]").filter{ x:String? -> x != "" }.toMutableList() as ArrayList<String>
+
+            }
+
+        db.collection("solutions").document(exam)
+            .get()
+            .addOnSuccessListener{ result ->
+
+                Log.d("result in student view exam", result.toString())
+                mcQuestionSolution =
+                    result.data?.get("mcQuestionsAnswers").toString().split(",","[", "]").filter{ x:String? -> x != "" }.toMutableList() as ArrayList<String>
+                openQuestionSolution =
+                    result.data?.get("openQuestionsAnswers").toString().split(",","[", "]").filter{ x:String? -> x != "" }.toMutableList() as ArrayList<String>
+                codeQuestionSolution =
+                    result.data?.get("codeQuestionsAnswers").toString().split(",","[", "]").filter{ x:String? -> x != "" }.toMutableList() as ArrayList<String>
 
             }
 
@@ -69,9 +92,22 @@ class StudentViewExamActivity : AppCompatActivity() {
             txt.imeOptions = EditorInfo.IME_FLAG_NO_ENTER_ACTION
             txt.isSingleLine = false
             txt.layoutParams = lparams
-            for (i in 0 .. tellerForOpenQuestions){
-                txt.hint = openQuestionAswers[i]
+            puntenTotaal++
+            txtPuntenTotaal.text = "/" +puntenTotaal.toString()
+            if (tellerForOpenQuestions != null || tellerForOpenQuestions != 0){
+                for (i in 0 .. tellerForOpenQuestions){
+                    txt.hint = openQuestionAswers[i]
+                    if (txt.hint == openQuestionSolution[i]){
+                        txt.setHintTextColor(Color.GREEN)
+                        punten++
+                        txtPunten.text = punten.toString()
+                    }
+                    else if (txt.hint != openQuestionSolution[i]){
+                        txt.setHintTextColor(Color.RED)
+                    }
+                }
             }
+
             txt.isEnabled = false
             tellerForOpenQuestions++
             return  txt
@@ -102,11 +138,20 @@ class StudentViewExamActivity : AppCompatActivity() {
             layout.addView(txt)
 
             for(i in 1 .. teller){
+                puntenTotaal++
+                txtPuntenTotaal.text = "/" + puntenTotaal.toString()
                 val view = layoutInflater.inflate(R.layout.code_vraag_layout, null)
                 val etAnswer = view.findViewById<EditText>(R.id.etAnswer)
                 etAnswer.hint = codeQuestionAswers[i-1]
+                if (etAnswer.hint == codeQuestionSolution[i-1]){
+                    etAnswer.setHintTextColor(Color.GREEN)
+                    punten++
+                    txtPunten.text = punten.toString()
+                }
+                else if (etAnswer.hint != codeQuestionSolution[i-1]){
+                    etAnswer.setHintTextColor(Color.RED)
+                }
                 etAnswer.isEnabled = false
-                //if (codeQuestionAswers.contains())
                 layout.addView(view)
             }
         }
@@ -124,6 +169,14 @@ class StudentViewExamActivity : AppCompatActivity() {
                     rdbNewRadioButton.isChecked = true
 
                 }
+                if (mcQuestionSolution.contains(rdbNewRadioButton.text)){
+                    rdbNewRadioButton.setTextColor(Color.GREEN)
+                    punten++
+                    txtPunten.text = punten.toString()
+                }
+                else if (!(mcQuestionSolution.contains(rdbNewRadioButton.text))){
+                    rdbNewRadioButton.setTextColor(Color.RED)
+                }
                 rdbNewRadioButton.isEnabled = false
                 radioButtonArray.add(rdbNewRadioButton)
                 Log.d("radiobutton", rdbNewRadioButton.text.toString())
@@ -136,6 +189,8 @@ class StudentViewExamActivity : AppCompatActivity() {
 
         fun radioButtonGroup(title:TextView, radioButtons: ArrayList<RadioButton>): RadioGroup {
 
+            puntenTotaal++
+            txtPuntenTotaal.text = "/" +puntenTotaal.toString()
             val radioButtonGroup = RadioGroup(this)
             radioButtonGroup.layoutParams  = LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.WRAP_CONTENT,

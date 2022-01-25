@@ -1,4 +1,4 @@
-package be.ap.edu.integratedprojectmobile.student
+package be.ap.edu.integratedprojectmobile.admin
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -6,17 +6,14 @@ import android.os.Bundle
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 import org.osmdroid.views.MapView;
 import android.preference.PreferenceManager
-import android.util.Log
-import android.widget.TextView
 import androidx.core.app.ActivityCompat
 import be.ap.edu.integratedprojectmobile.R
 import org.osmdroid.config.Configuration.getInstance
 import org.osmdroid.util.GeoPoint
 import org.osmdroid.views.overlay.Marker
-import java.io.IOException
 
 
-class StudentGeoActivity : AppCompatActivity() {
+class AdminStudentGeoActivity : AppCompatActivity() {
     private val REQUEST_PERMISSIONS_REQUEST_CODE = 1
     private lateinit var map : MapView
     override fun onCreate(savedInstanceState: Bundle?) {

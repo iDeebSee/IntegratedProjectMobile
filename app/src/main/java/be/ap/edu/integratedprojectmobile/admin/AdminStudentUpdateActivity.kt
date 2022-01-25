@@ -1,4 +1,4 @@
-package be.ap.edu.integratedprojectmobile.student
+package be.ap.edu.integratedprojectmobile.admin
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -7,11 +7,11 @@ import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import be.ap.edu.integratedprojectmobile.R
-import be.ap.edu.integratedprojectmobile.admin.AdminStudentActivity
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
-class StudentUpdateActivity : AppCompatActivity() {
+class AdminStudentUpdateActivity : AppCompatActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_student_update)
