@@ -91,11 +91,12 @@ class NewExamActivity : AppCompatActivity() {
             for (item in cleansedText){
                 teller++
                 finishedText += "$item ($teller)____ "
+
             }
             txt.text = finishedText
             layout.addView(txt)
 
-            for(i in 1 .. teller){
+            for(i in 1 .. teller-1){
                 val view = layoutInflater.inflate(R.layout.code_vraag_layout, null)
                 val etAnswer = view.findViewById<EditText>(R.id.etAnswer)
                 etAnswer.hint = i.toString()
