@@ -14,6 +14,7 @@ import android.widget.LinearLayout.LayoutParams
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import android.widget.RadioButton
+import androidx.core.view.isVisible
 import be.ap.edu.integratedprojectmobile.R
 import be.ap.edu.integratedprojectmobile.database.FirebaseDatabaseHelper
 
@@ -32,6 +33,7 @@ class NewExamActivity : AppCompatActivity() {
         val amount = intent.getStringExtra("amount")
         val txtVragen = findViewById<TextView>(R.id.txtVragen)
         val vraagTitel = findViewById<TextView>(R.id.txtVraagTitel)
+        vraagTitel.isEnabled = false
         val btnSaveExam = findViewById<Button>(R.id.btnSaveExam)
         val db = Firebase.firestore
         val radioButtonsToDB = ArrayList<String>()
@@ -158,10 +160,20 @@ class NewExamActivity : AppCompatActivity() {
 
         }
 
+        rdbMultiChoice.setOnClickListener {
+            vraagTitel.isEnabled = true
+        }
+        rdbCodeVraag.setOnClickListener {
+            vraagTitel.isEnabled = false
+        }
+        rdbOpenVraag.setOnClickListener {
+            vraagTitel.isEnabled = false
+        }
 
         btnAdd.setOnClickListener {
 
             if (rdbMultiChoice.isChecked){
+
                 val questions = txtVragen.text.split("-").toTypedArray()
                 //val titleArray = questions.toString().split(";").toTypedArray()
 
@@ -171,9 +183,11 @@ class NewExamActivity : AppCompatActivity() {
                 layout.addView(radioButtonGroup(addTitle(vraagTitel.text.toString()),radioButton(questions)))
             }
             if (rdbOpenVraag.isChecked){
+
                 layout.addView(createNewTextView(txtVragen.text.toString()))
             }
             if(rdbCodeVraag.isChecked){
+
                 createCodeVraag(txtVragen.text.toString())
             }
         }
