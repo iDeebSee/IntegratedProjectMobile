@@ -24,27 +24,6 @@ import com.google.firebase.ktx.Firebase
 
 class StudentsActivity : AppCompatActivity() {
 
-    override fun onBackPressed() {
-        Toast.makeText(
-            applicationContext,
-            "You Are Not Allowed to Exit the App",
-            Toast.LENGTH_SHORT
-        ).show()
-    }
-
-    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
-        if (keyCode == KeyEvent.KEYCODE_HOME) {
-            Log.i(
-                "TEST",
-                "Home Button"
-            ) // here you'll have to do something to prevent the button to go to the home screen
-            val intent = Intent(this, StudentsActivity::class.java)
-            startActivity(intent)
-            return true
-        }
-        return super.onKeyDown(keyCode, event)
-    }
-
 //    val uid = intent.getStringExtra("snummer").toString()
     var getLon: String = ""
     var getLat: String = ""

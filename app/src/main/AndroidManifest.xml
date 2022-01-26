@@ -21,9 +21,6 @@
             android:name=".admin.AdminStudentGeoActivity"
             android:exported="true" />
         <activity
-            android:name=".PopUpWindow"
-            android:exported="true" />
-        <activity
             android:name=".admin.AdminStudentUpdateActivity"
             android:exported="true" />
         <activity

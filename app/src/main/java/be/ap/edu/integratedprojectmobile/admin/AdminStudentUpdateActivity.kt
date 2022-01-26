@@ -32,7 +32,7 @@ class AdminStudentUpdateActivity : AppCompatActivity() {
             )
             db.collection("students").document(student).delete()
             db.collection("students").document(txtStudent.text.toString()).set(studentData)
-            Toast.makeText(this, "student has been updated", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, "Student geupdatet!", Toast.LENGTH_LONG).show()
             val intent = Intent(this, AdminStudentActivity::class.java)
 //            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
 //            finish();

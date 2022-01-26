@@ -29,7 +29,7 @@ class AdminLoginActivity : AppCompatActivity() {
 //            Log.d("adminPassFromDb 0 ", adminPassFromDb.getString(0))
 //            adminPass = adminPassFromDb.getString(0).toString()
 //        }
-        val toast = Toast.makeText(applicationContext, "Wrong Password!", Toast.LENGTH_LONG);
+        val toast = Toast.makeText(applicationContext, "Verkeerd wachtwoord!", Toast.LENGTH_LONG);
         val lblLogin = findViewById<TextView>(R.id.lblLogin)
 
         db.collection("admin")

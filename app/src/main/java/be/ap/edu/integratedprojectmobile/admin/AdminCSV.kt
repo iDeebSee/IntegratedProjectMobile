@@ -48,7 +48,7 @@ class AdminCSV : AppCompatActivity() {
                             Log.w(TAG, "Error adding document", e)
                         }
                 }
-                Toast.makeText(this, "Students stored!", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, "Students opgeslagen!", Toast.LENGTH_LONG).show()
 
             }
 

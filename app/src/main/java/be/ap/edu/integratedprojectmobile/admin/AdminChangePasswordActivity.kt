@@ -51,7 +51,7 @@ class AdminChangePasswordActivity : AppCompatActivity() {
                 val intent = Intent(this, AdminLoginActivity::class.java)
                 startActivity(intent)
             }else{
-                Toast.makeText(applicationContext, "Wrong password!", Toast.LENGTH_LONG).show()
+                Toast.makeText(applicationContext, "Verkeerd wachtwoord!", Toast.LENGTH_LONG).show()
             }
             //dbh.updateAdminPass(newPass.toString(), oldPass.toString())
 

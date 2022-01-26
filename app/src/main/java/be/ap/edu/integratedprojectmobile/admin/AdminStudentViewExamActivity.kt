@@ -94,7 +94,7 @@ class AdminStudentViewExamActivity : AppCompatActivity() {
             txt.layoutParams = lparams
             puntenTotaal++
             txtPuntenTotaal.text = "/" +puntenTotaal.toString()
-            if (tellerForOpenQuestions != null || tellerForOpenQuestions != 0){
+            if (tellerForOpenQuestions != null || tellerForOpenQuestions > 0){
                 for (i in 0 .. tellerForOpenQuestions){
                     txt.hint = openQuestionAswers[i]
                     if (txt.hint == openQuestionSolution[i]){
@@ -171,6 +171,9 @@ class AdminStudentViewExamActivity : AppCompatActivity() {
                 }
                 if (mcQuestionSolution.contains(rdbNewRadioButton.text)){
                     rdbNewRadioButton.setTextColor(Color.GREEN)
+
+                }
+                if (mcQuestionAswers.contains(rdbNewRadioButton.text) && mcQuestionSolution.contains(rdbNewRadioButton.text)){
                     punten++
                     txtPunten.text = punten.toString()
                 }

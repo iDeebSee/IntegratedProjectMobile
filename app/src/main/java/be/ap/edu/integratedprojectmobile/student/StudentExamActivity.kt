@@ -9,17 +9,10 @@ import android.util.Log
 import android.view.KeyEvent
 import android.view.inputmethod.EditorInfo
 import android.widget.*
-import be.ap.edu.integratedprojectmobile.PopUpWindow
 import be.ap.edu.integratedprojectmobile.R
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import android.widget.Toast
-import android.view.WindowManager
-
-
-
-
-
 
 
 class StudentExamActivity : AppCompatActivity() {
@@ -27,7 +20,7 @@ class StudentExamActivity : AppCompatActivity() {
     override fun onBackPressed() {
         Toast.makeText(
             applicationContext,
-            "You Are Not Allowed to Exit the App",
+            "U mag de app niet sluiten",
             Toast.LENGTH_SHORT
         ).show()
     }
@@ -35,8 +28,8 @@ class StudentExamActivity : AppCompatActivity() {
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
         if (keyCode == KeyEvent.KEYCODE_HOME || keyCode == KeyEvent.KEYCODE_ALL_APPS) {
             Log.i(
-                "TEST",
-                "Home Button"
+                "U mag de app niet sluiten",
+                "U mag de app niet sluiten"
             ) // here you'll have to do something to prevent the button to go to the home screen
             val intent = Intent(this, StudentExamActivity::class.java)
             startActivity(intent)
@@ -238,7 +231,7 @@ class StudentExamActivity : AppCompatActivity() {
         btnSubmit.setOnClickListener {
             for(item:TextView in openVragenVeld){
 
-                openVragenAntwoord.add(item.text.toString())
+                openVragenAntwoord.add(item.text.toString().lowercase())
                 Log.d("btn save openQ text", item.text.toString())
             }
 

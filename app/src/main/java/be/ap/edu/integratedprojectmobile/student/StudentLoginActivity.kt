@@ -19,7 +19,7 @@ class StudentLoginActivity : AppCompatActivity() {
     override fun onBackPressed() {
         Toast.makeText(
             applicationContext,
-            "You Are Not Allowed to Exit the App",
+            "U mag de app niet sluiten",
             Toast.LENGTH_SHORT
         ).show()
     }
@@ -27,8 +27,8 @@ class StudentLoginActivity : AppCompatActivity() {
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
         if (keyCode == KeyEvent.KEYCODE_HOME) {
             Log.i(
-                "TEST",
-                "Home Button"
+                "U mag de app niet sluiten",
+                "U mag de app niet sluiten"
             ) // here you'll have to do something to prevent the button to go to the home screen
             val intent = Intent(this, StudentLoginActivity::class.java)
             startActivity(intent)

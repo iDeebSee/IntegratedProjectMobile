@@ -13,6 +13,8 @@ import be.ap.edu.integratedprojectmobile.admin.AdminDashboardActivity
 import be.ap.edu.integratedprojectmobile.student.StudentsActivity
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import java.util.*
+import kotlin.collections.ArrayList
 
 class ExamDashboardActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -204,7 +206,7 @@ class ExamDashboardActivity : AppCompatActivity() {
         btnSave.setOnClickListener {
             for(item:TextView in openVragenVeld){
 
-                openVragenAntwoord.add(item.text.toString())
+                openVragenAntwoord.add(item.text.toString().lowercase())
                 Log.d("btn save openQ text", item.text.toString())
             }
 
