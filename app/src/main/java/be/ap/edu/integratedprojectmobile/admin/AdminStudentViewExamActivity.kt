@@ -40,6 +40,7 @@ class AdminStudentViewExamActivity : AppCompatActivity() {
             .get()
             .addOnSuccessListener{ result ->
 
+                Log.d("list", result.data?.get("mcQuestionsAnswers").toString().split(",","[", "]").filter{ x:String? -> x != "" }.toString())
                 mcQuestionAswers =
                     result.data?.get("mcQuestionsAnswers").toString().split(",","[", "]").filter{ x:String? -> x != "" }.toMutableList() as ArrayList<String>
                 openQuestionAswers =
@@ -48,6 +49,8 @@ class AdminStudentViewExamActivity : AppCompatActivity() {
                     result.data?.get("codeQuestionsAnswers").toString().split(",","[", "]").filter{ x:String? -> x != "" }.toMutableList() as ArrayList<String>
 
             }
+
+
 
         db.collection("solutions").document(exam)
             .get()
@@ -94,7 +97,7 @@ class AdminStudentViewExamActivity : AppCompatActivity() {
             txt.layoutParams = lparams
             puntenTotaal++
             txtPuntenTotaal.text = "/" +puntenTotaal.toString()
-            if (tellerForOpenQuestions != null || tellerForOpenQuestions > 0){
+            if (tellerForOpenQuestions != null || tellerForOpenQuestions != 0){
                 for (i in 0 .. tellerForOpenQuestions){
                     txt.hint = openQuestionAswers[i]
                     if (txt.hint == openQuestionSolution[i]){
@@ -137,7 +140,7 @@ class AdminStudentViewExamActivity : AppCompatActivity() {
             txt.isEnabled = false
             layout.addView(txt)
 
-            for(i in 1 .. teller){
+            for(i in 1 .. codeQuestionAswers.size){
                 puntenTotaal++
                 txtPuntenTotaal.text = "/" + puntenTotaal.toString()
                 val view = layoutInflater.inflate(R.layout.code_vraag_layout, null)
