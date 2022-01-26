@@ -150,7 +150,14 @@ class AdminDashboardActivity : AppCompatActivity() {
             val CSVIntent = Intent(this, AdminCSV::class.java)
             startActivity(CSVIntent)
         }
-
-
+        val btnRefresh = findViewById<Button>(R.id.btnRefresh)
+        btnRefresh.setOnClickListener {
+            val intent = Intent(this, AdminDashboardActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+            finish();
+            startActivity(intent)
+        }
     }
+
+
 }
